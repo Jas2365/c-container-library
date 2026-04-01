@@ -1,5 +1,19 @@
 #pragma once
 
+// for windows 64 bit
+
+typedef void null;
+
+/**
+ * null means notype 
+ * null* can return nullptr
+ * void means zero, macro VOID 0ULL
+ * 
+ * older version do
+ * macro NULL 0ULL
+ * void* can return (void*)0
+ */
+
 typedef char       i8;
 typedef short     i16;
 typedef int       i32;
@@ -15,8 +29,13 @@ typedef unsigned short     u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
 
-typedef          long long ss64; // ssize_t
-typedef unsigned long long  s64; // size_t
+// #ifdef _WIN64 && (!_WIN32)
+typedef i64  ss64; // ssize_t
+typedef u64   s64; // size_t
+typedef i32  ss32; // ssize_t
+typedef u32   s32; // size_t
+// #elif _WIN32 && (_WIN64)
+// #endif
 
 typedef const unsigned char       cu8;
 typedef const unsigned short     cu16;

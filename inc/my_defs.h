@@ -1,4 +1,7 @@
 #pragma once
 
+
+#define VOID 0ULL
+
 #define endl "\n"
-#define endline printf("\n")
+#define endline putchar('\n')
