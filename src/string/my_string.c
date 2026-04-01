@@ -7,65 +7,60 @@
 
 #include <my_defs.h>
 
+#define get_string_tag(str) ( (string_tag*) ( (i8*)(str) - offsetof(string_tag, str) ) )
 
-struct string_tag {
-    
-    s64 length;
-    i8  data[];
-};
-
-#define get_string_tag(str) ( (string_tag*) ( (i8*)(str) - offsetof(string_tag, data) ) )
-
-string String(const string str) {
+string String(const string_literal str) {
     if(!str) return nullptr;
 
     s64 len = strlen(str);
 
-    string_tag* st = (string_tag*)malloc((sizeof(string_tag)) + len);
+    string st = (string)malloc((sizeof(string_tag)) + len);
     if(!st) return nullptr;
+    
     st->length = len;
 
-    if(st->data) {
-        memcpy(st->data, str, st->length);
+    if(st->str) {
+        memcpy(st->str, str, st->length);
     } 
 
-    return st->data;
+    return st;
 }
-string nString(const string str, s64 len) {
+string nString(const string_literal str, s64 len) {
     if(!str) return nullptr;
 
     // s64 len = strlen(str);           this is the only difference between nString and String
 
-    string_tag* st = (string_tag*)malloc((sizeof(string_tag)) + len);
+    string st = (string)malloc((sizeof(string_tag)) + len);
     if(!st) return nullptr;
     st->length = len;
 
-    if(st->data) {
-        memcpy(st->data, str, st->length);
+    if(st->str) {
+        memcpy(st->str, str, st->length);
     } 
 
-    return st->data;
+    return st;
 }
-string_tag* String_Tag(const string str) {
 
-    if(!str) return nullptr;
+// string_tag* String_Tag(const string_literal str) {
 
-    s64 len = strlen(str);
+//     if(!str) return nullptr;
 
-    string_tag* s = (string_tag*)malloc((sizeof(string_tag)) + len);
-    if(!s) return nullptr;
-    s->length = len;
+//     s64 len = strlen(str);
 
-    if(s->data) {
-        memcpy(s->data, str, s->length);
-    } 
+//     string_tag* s = (string_tag*)malloc((sizeof(string_tag)) + len);
+//     if(!s) return nullptr;
+//     s->length = len;
 
-    return s;
-}
+//     if(s->str) {
+//         memcpy(s->str, str, s->length);
+//     } 
+
+//     return s;
+// }
 
 null free_string(string str) {
     if(str) {
-        free(get_str_tag(str));
+        free(str);
         str = nullptr;
     }
 }

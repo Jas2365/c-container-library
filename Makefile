@@ -31,5 +31,5 @@ run:
 	@echo  ---- Ending  Project ---- 
 	
 clean:
-	@echo Cleaning up...
+	@echo ---- Cleaning up ----
 	@if exist "$(out_dir)" rd /s /q $(out_dir)
