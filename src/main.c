@@ -17,7 +17,7 @@ null helper(string_vw temp, i32 i) {
 }
 
 i32 main() {
-    Init_Arena();
+    __Init_Arena__
     
     string name = String("   Hello,World one    ");
     string name2 = String(" Name 2 ");
@@ -41,6 +41,7 @@ i32 main() {
 
     printf(fmt_str endl, arg_stra(hello));
 
-    Free_Arena();
+    __Free_Arena__
+    
     return 0;
 }

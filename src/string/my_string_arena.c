@@ -23,14 +23,13 @@ Arena_p _Global_Arena_;
 null Init_Arena() {
 
     _Global_Arena_ = (Arena_p)malloc(sizeof(Arena) + _Arena_Size_ );
-
     _Global_Arena_->info.capacity = _Arena_Size_;
     _Global_Arena_->info.current_index = 0;
 
 }
 
 null Free_Arena() {
-    free(_Global_Arena_);    
+    free(_Global_Arena_);
 }
 
 i8 *Arena_Push(s64 size) {

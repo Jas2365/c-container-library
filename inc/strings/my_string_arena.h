@@ -17,6 +17,14 @@ null Inc_Arena_Index(s64 inc);
 s64 Get_Arena_Capacity();
 i8* Get_Arena_Storage();
 
+#ifndef __Init_Arena__
+#define __Init_Arena__ Init_Arena();
+#endif
+
+#ifndef __Free_Arena__
+#define __Free_Arena__ Free_Arena();
+#endif
+
 
 
 

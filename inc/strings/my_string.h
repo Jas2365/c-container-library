@@ -18,4 +18,3 @@ typedef i8* string_literal;
 [[nodiscard]] string String_share(str_ptr share_str);
 [[nodiscard]] string String_copy (str_ptr copy_str);
 
-// null print_string(string str);

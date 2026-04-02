@@ -58,28 +58,3 @@ string String_copy(str_ptr copy_str) {
     
     return result;
 }
-
-// string nString_copy(string str, s64 n) {
-//     if(!str) return nullptr;
-
-//     string st = (string)malloc((sizeof(string_tag)) + n);
-//     if(!st) return nullptr;
-//     st->length = n;
-
-//     if(st->str) {
-//         memcpy(st->str, str->str, st->length);
-//     }
-
-//     return st;
-// }
-
-// null free_string(string str) {
-//     if(str) {
-//         free(str);
-//     }
-// }
-
-// null print_string(string str) {
-//     if(!str) return;
-//     fwrite(str->str, sizeof(i8), str->length, stdout);
-// }
