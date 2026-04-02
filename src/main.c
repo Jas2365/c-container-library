@@ -16,6 +16,8 @@ int main() {
     string_vw name_vw = String_vw(name);
 
     
+
+    
     printf("string : |" fmt_str "|" endl, arg_strp(name_vw));
         
     sv_trim(name_vw);
@@ -27,6 +29,7 @@ int main() {
     printf("string : |" fmt_str "|" endl, arg_stra(hello));
     printf("string : |" fmt_str "|" endl, arg_strp(hp));
     printf("string : |" fmt_str "|" endl, arg_strp(op));
+
 
     free_string_vw(name_vw);
     free_string(name);

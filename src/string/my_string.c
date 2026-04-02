@@ -25,14 +25,12 @@ string String(const string_literal str) {
 
     return st;
 }
-string nString(const string_literal str, s64 len) {
+string nString(const string_literal str, s64 n) {
     if(!str) return nullptr;
-
-    // s64 len = strlen(str);           this is the only difference between nString and String
-
-    string st = (string)malloc((sizeof(string_tag)) + len);
+    
+    string st = (string)malloc((sizeof(string_tag)) + n);
     if(!st) return nullptr;
-    st->length = len;
+    st->length = n;
 
     if(st->str) {
         memcpy(st->str, str, st->length);
@@ -41,22 +39,33 @@ string nString(const string_literal str, s64 len) {
     return st;
 }
 
-// string_tag* String_Tag(const string_literal str) {
 
-//     if(!str) return nullptr;
+string String_copy(string str) {
+    if(!str) return nullptr;
 
-//     s64 len = strlen(str);
+    string st = (string)malloc((sizeof(string_tag)) + str->length);
+    if(!st) return nullptr;
+    st->length = str->length;
 
-//     string_tag* s = (string_tag*)malloc((sizeof(string_tag)) + len);
-//     if(!s) return nullptr;
-//     s->length = len;
+    if(st->str) {
+        memcpy(st->str, str->str, st->length);
+    } 
 
-//     if(s->str) {
-//         memcpy(s->str, str, s->length);
-//     } 
+    return st;
+}
+string nString_copy(string str, s64 n) {
+    if(!str) return nullptr;
 
-//     return s;
-// }
+    string st = (string)malloc((sizeof(string_tag)) + n);
+    if(!st) return nullptr;
+    st->length = n;
+
+    if(st->str) {
+        memcpy(st->str, str->str, st->length);
+    }
+
+    return st;
+}
 
 null free_string(string str) {
     if(str) {
@@ -65,17 +74,7 @@ null free_string(string str) {
     }
 }
 
-string_tag *get_str_tag(string str) {
-    if(!str) return nullptr;
-    return get_string_tag(str);
-}
-
-s64 get_str_len(string str) {
-    if(!str) return VOID;
-    return get_string_tag(str)->length;
-}
-
 null print_string(string str) {
-    if(!str) return;    
-    fwrite(str, sizeof(i8), get_str_len(str), stdout);
+    if(!str) return;
+    fwrite(str->str, sizeof(i8), str->length, stdout);
 }

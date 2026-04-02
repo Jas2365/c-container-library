@@ -15,13 +15,16 @@ typedef struct string_tag {
 typedef i8* string_literal;
 
 [[nodiscard]] string String(const string_literal str);
-[[nodiscard]] string nString(const string_literal str, s64 len);
-// [[nodiscard]] string_tag* String_Tag(const string_literal str);
+[[nodiscard]] string nString(const string_literal str, s64 n);
+
+[[nodiscard]] string String_copy(string str);
+[[nodiscard]] string nString_copy(string str, s64 n);
+
 
 null free_string(string str);
 
-string_tag* get_str_tag(string str);
-s64 get_str_len(string str);
+// deprecated
+// string_tag* get_str_tag(string str);
 
 null print_string(string str);
 
