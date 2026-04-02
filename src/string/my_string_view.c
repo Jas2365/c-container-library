@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <string.h>
 
-string_view String_View(string str){
+string_view String_View(str_ptr str){
 
     return (string_view) {
         .length = str->length,
@@ -13,7 +13,7 @@ string_view String_View(string str){
     };
 
 }
-string_view nString_View(string str, s64 n){
+string_view nString_View(str_ptr str, s64 n){
 
     return (string_view) {
         .length = n,
@@ -22,23 +22,18 @@ string_view nString_View(string str, s64 n){
 
 }
 
-string_vw String_vw(string str){
-
-    string_vw str_vw = (string_vw)malloc(sizeof(string_view));
-    str_vw->length   = str->length;
-    str_vw->str      = str->str;        
-    return str_vw;
-
-}
-
-string_vw nString_vw(string str, s64 n){
-    
-    string_vw str_vw = (string_vw)malloc(sizeof(string_view));
-    str_vw->length   = n;
-    str_vw->str      = str->str;        
-    return str_vw;
-
-}
+// string_vw String_vw(str_ptr str){
+//     string_vw str_vw = (string_vw)malloc(sizeof(string_view));
+//     str_vw->length   = str->length;
+//     str_vw->str      = str->str;        
+//     return str_vw;
+// }
+// string_vw nString_vw(str_ptr str, s64 n){
+//     string_vw str_vw = (string_vw)malloc(sizeof(string_view));
+//     str_vw->length   = n;
+//     str_vw->str      = str->str;        
+//     return str_vw;
+// }
 
 string_view String_View_literal(string_literal str){
 
@@ -54,33 +49,36 @@ string_view nString_View_literal(string_literal str, s64 n){
         .length = n,
         .str    = str
     };
-}
-string_vw String_vw_literal(string_literal str){
-
-    string_vw str_vw = (string_vw)malloc(sizeof(string_view));
-    str_vw->length   = strlen(str);
-    str_vw->str      = str;        
-    return str_vw;
 
 }
-string_vw nString_vw_literal(string_literal str, s64 n){ 
 
-    string_vw str_vw = (string_vw)malloc(sizeof(string_view));
-    str_vw->length   = n;
-    str_vw->str      = str;        
-    return str_vw;
-}
+// string_vw String_vw_literal(string_literal str){
 
-null free_string_vw(string_vw str){
+//     string_vw str_vw = (string_vw)malloc(sizeof(string_view));
+//     str_vw->length   = strlen(str);
+//     str_vw->str      = str;        
+//     return str_vw;
 
-    if(str) free(str);
-    str = nullptr;
+// }
+// string_vw nString_vw_literal(string_literal str, s64 n){ 
 
-}
+//     string_vw str_vw = (string_vw)malloc(sizeof(string_view));
+//     str_vw->length   = n;
+//     str_vw->str      = str;        
+//     return str_vw;
+// }
+
+// null free_string_vw(string_vw str){
+
+//     if(str) free(str);
+//     str = nullptr;
+
+// }
 
 null print_string_vw(string_vw sv) {
 
     fwrite(sv->str, sizeof(i8), sv->length, stdout);
+
 }
 
 null sv_chop_right(string_vw sv, s64 n) {
@@ -144,22 +142,22 @@ string_view sv_chop_by_delim(string_vw sv, i8 delim) {
 
 }
 
-string_vw sv_chop_by_delim_ptr(string_vw sv, i8 delim) {
+// string_vw sv_chop_by_delim_ptr(string_vw sv, i8 delim) {
 
-    s64 i = 0; 
+//     s64 i = 0; 
 
-    while(i < sv->length && sv->str[i] != delim) {
-        i++;
-    }
+//     while(i < sv->length && sv->str[i] != delim) {
+//         i++;
+//     }
     
-    if(i < sv->length) {
-        string_vw res = nString_vw_literal(sv->str, i);
-        sv_chop_left(sv, i + 1);
-        return res;
-    }
+//     if(i < sv->length) {
+//         string_vw res = nString_vw_literal(sv->str, i);
+//         sv_chop_left(sv, i + 1);
+//         return res;
+//     }
 
-    string_vw res = sv;
-    sv_chop_left(sv, sv->length);
-    return res;
+//     string_vw res = sv;
+//     sv_chop_left(sv, sv->length);
+//     return res;
 
-}
+// }
