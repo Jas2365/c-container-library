@@ -1,5 +1,7 @@
 cxx = gcc
-cflags =
+
+Arena_Mode ?= _Small_Arena_
+cflags = -D$(Arena_Mode)
 
 src_dir = src
 out_dir = out
@@ -12,7 +14,9 @@ objs = $(patsubst $(src_dir)/%.c, $(out_dir)/%.o, $(srcs))
 
 target = out/main.exe
 
-all: $(target) run
+all: clean build run
+
+build: $(objs) $(target)
 
 #  linking 
 $(target): $(objs)
@@ -23,7 +27,7 @@ $(target): $(objs)
 $(out_dir)/%.o : $(src_dir)/%.c
 	@if not exist "$(dir $@)" mkdir $(subst /,\, $(dir $@))"
 	@echo Compiling $< ...
-	@$(cxx) $(inc) -c $< -o $@
+	@$(cxx) $(cflags) $(inc) -c $< -o $@
 
 run:
 	@echo  ---- Running Project ---- 

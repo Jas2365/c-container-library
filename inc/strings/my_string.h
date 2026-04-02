@@ -3,12 +3,10 @@
 #include <my_ints.h>
 #include <strings/my_string_defs.h>
 
-
-
 typedef struct string_tag {
     
-    s64 length;
-    i8  str[];
+    s64  length;
+    i8*  str;
 
 } string_tag, *string;
 
@@ -22,9 +20,5 @@ typedef i8* string_literal;
 
 
 null free_string(string str);
-
-// deprecated
-// string_tag* get_str_tag(string str);
-
 null print_string(string str);
 

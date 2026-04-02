@@ -7,8 +7,6 @@
 
 #include <my_defs.h>
 
-#define get_string_tag(str) ( (string_tag*) ( (i8*)(str) - offsetof(string_tag, str) ) )
-
 string String(const string_literal str) {
     if(!str) return nullptr;
 
@@ -25,6 +23,7 @@ string String(const string_literal str) {
 
     return st;
 }
+
 string nString(const string_literal str, s64 n) {
     if(!str) return nullptr;
     
@@ -70,7 +69,6 @@ string nString_copy(string str, s64 n) {
 null free_string(string str) {
     if(str) {
         free(str);
-        str = nullptr;
     }
 }
 
