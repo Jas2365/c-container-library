@@ -35,12 +35,10 @@ null Free_Arena() {
 i8 *Arena_Push(s64 size) {
 
     if(size + Get_Arena_Index() > Get_Arena_Capacity()) return nullptr; // out of memory
+    i8* arena_mem = Get_Arena_Storage() + Get_Arena_Index();            // get current index
+    Inc_Arena_Index(size);                                              // increment the index by the length of string
+    return arena_mem;                                                   // return the position of the index
 
-    i8* arena_mem = Get_Arena_Storage() + Get_Arena_Index();  // get current index
-
-    Inc_Arena_Index(size);  // increment the index by the length of string
-
-    return arena_mem; // return the position of the index
 }
 
 s64 Get_Arena_Index() {
