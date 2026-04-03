@@ -5,8 +5,6 @@
 typedef struct Arena_Info Arena_Info, *Arena_Info_p;
 typedef struct Arena Arena, *Arena_p;
 
-extern Arena_p _Global_Arena_;
-
 null Init_Arena();
 null Free_Arena();
 

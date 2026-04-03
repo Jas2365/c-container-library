@@ -8,8 +8,6 @@
 #include <my_defs.h>
 #include <my_string_arena.h>
 
-static string null_string = {0};
-
 string String(const string_literal str) {
     if(!str) return null_string;
     

@@ -12,6 +12,8 @@ typedef struct string {
 
 typedef i8* string_literal;
 
+static string null_string = {0};
+
 [[nodiscard]] string String (const string_literal str);
 [[nodiscard]] string nString(const string_literal str, s64 n);
 

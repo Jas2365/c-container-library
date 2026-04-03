@@ -18,7 +18,13 @@ struct Arena {
 
 };
 
-Arena_p _Global_Arena_;
+struct Arena_Table {
+    s64 index;
+    // this needs a dynamic array to be more efficient
+
+};
+
+static Arena_p _Global_Arena_;
 
 null Init_Arena() {
 
