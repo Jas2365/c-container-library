@@ -49,13 +49,13 @@ if((l)->size == (l)->capacity) {                                \
 (l)->buffer[(l)->size++] = (item);
 // =================== list_push ===================
 
-
+null* free_list_temporary_pointer = nullptr;
 #define free_list(list)         \
-    auto temp = to_ptr(list);   \
-    free(temp->buffer);         \
-    temp->buffer   = nullptr;   \
-    temp->size     = 0;         \
-    temp->capacity = 0;
+    free_list_temporary_pointer = to_ptr(list);   \
+    free(free_list_temporary_pointer->buffer);         \
+    free_list_temporary_pointer->buffer   = nullptr;   \
+    free_list_temporary_pointer->size     = 0;         \
+    free_list_temporary_pointer->capacity = 0;
     
 
 

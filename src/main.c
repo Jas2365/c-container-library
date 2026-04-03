@@ -39,7 +39,14 @@ typedef struct student {
 
 DEFINE_LIST(student);
 
-
+null push_student(List(student)* sts, student* s) {
+    student ss = {
+        .id = s->id,
+        .age = s->age,
+        .class = s->class,
+    };
+    list_push(sts, ss);
+}
 
 i32 main() {
 
@@ -49,9 +56,11 @@ i32 main() {
 
     student s0 = { .id = 23, .age = 33, .class = 23};
 
-    list_push(&st, s0);
+    push_student(&st, &s0);
+    push_student(&st, &(student){.id = 12, .age = 23, .class = 34});
 
     printf("s0: %d %d %d" endl, st.buffer[0].age, st.buffer[0].class, st.buffer[0].id);
+    printf("s1: %d %d %d" endl, st.buffer[1].age, st.buffer[1].class, st.buffer[1].id);
 
 
     i32List* m = &k;
@@ -73,6 +82,7 @@ i32 main() {
 
 
     free_list(k);
+    free_list(st);
     
     return 0;
 }
