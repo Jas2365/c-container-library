@@ -45,8 +45,11 @@ typedef const unsigned short     cu16;
 typedef const unsigned int       cu32;
 typedef const unsigned long long cu64;
 
-typedef u64 s64; // size_t
-
+#if defined(_WIN64)
+    typedef u64  s64; // size_t
+#else
+    typedef u32  s64; // size_t
+#endif
 typedef bool  b8;
 typedef i32  b32;
 

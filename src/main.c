@@ -22,68 +22,88 @@
 
 DEFINE_LIST(i32);
 
-null print_list(List(i32) *l) {
-    putchar('[');
-    for(i32 i = 0; i< l->size; i++){
-        printf(" %d", l->buffer[i]);
-        if(i < l->size-1) putchar(',');
-    }
-    printf(" ]"endl);
-}
-
-typedef struct student {
-    i32 id;
-    i32 age;
-    i32 class;
-} student;
-
-DEFINE_LIST(student);
-
-null push_student(List(student)* sts, student* s) {
-    student ss = {
-        .id = s->id,
-        .age = s->age,
-        .class = s->class,
-    };
-    list_push(sts, ss);
-}
-
 i32 main() {
 
-    List(i32) k = {0};
+    // stack
+    List(i32) l = list_init;
 
-    List(student) st = {0};
+    list_push(l, 10);
+    list_push(l, 20);
+    list_push(l, 10);
+    list_push(l, 20);
+    list_push(l, 10);
+    list_push(l, 20);
 
-    student s0 = { .id = 23, .age = 33, .class = 23};
+    putchar('[');
+    list_each(l, i) { 
+        printf(" %d", list_get(l, i)); 
+        if(i != list_size(l) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
 
-    push_student(&st, &s0);
-    push_student(&st, &(student){.id = 12, .age = 23, .class = 34});
+    list_foreach(l, i32, x) {
+        printf("%d" endl, x);
+    }
 
-    printf("s0: %d %d %d" endl, st.buffer[0].age, st.buffer[0].class, st.buffer[0].id);
-    printf("s1: %d %d %d" endl, st.buffer[1].age, st.buffer[1].class, st.buffer[1].id);
+    list_free(l);
 
+    putchar('[');
+    list_each(l, i) { 
+        printf(" %d", list_get(l, i)); 
+        if(i != list_size(l) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
 
-    i32List* m = &k;
+    // Heap
+    List(i32)* ll = list_alloc(i32);
 
-    list_push(m, 23);
-    list_push(m, 23);
-    list_push(m, 23);
-    list_push(m, 23);
-    list_push(m, 23);
-    list_push(m, 23);
+    list_reserve(ll, 10);
 
-    print_list(&k);
-    
-    int l;
-    int* n;
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 55);
+    list_grow(ll);
 
-    printf("%d" endl, is_ptr(l));
-    printf("%d" endl, is_ptr(n));
+    /**
+     * 2 4 8 16 32
+     * 8 16 32
+     * 10 20 40 80 160
+     */
 
+    putchar('[');
+    list_each(ll, i) { 
+        printf(" %d", list_get(ll, i)); 
+        if(i != list_size(ll) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
 
-    free_list(k);
-    free_list(st);
-    
+    i32 tt = list_pop(ll);
+
+    printf(" poped    : %d" endl, tt);
+    printf(" size     : %d" endl, list_size(ll));
+    printf(" capacity : %d" endl, list_capacity(ll));
+    printf(" last     : %d" endl, list_last(ll));
+    list_clear(ll);
+    printf(" is_empty : %d" endl, list_isempty(ll));
+    if(list_isempty(ll)) {
+        printf("empty" endl);
+    } else {
+        printf("not empty" endl);
+    }
+
+    list_destroy(ll);
+
     return 0;
 }
 

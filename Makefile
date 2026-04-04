@@ -6,7 +6,7 @@ cflags = -D$(Arena_Mode)
 src_dir = src
 out_dir = out
 
-inc = -Iinc -Iinc/strings
+inc = -Iinc -Iinc/strings -Iinc/lists
 srcs = $(wildcard $(src_dir)/*.c) $(wildcard $(src_dir)/**/*.c)
 
 objs = $(patsubst $(src_dir)/%.c, $(out_dir)/%.o, $(srcs))
