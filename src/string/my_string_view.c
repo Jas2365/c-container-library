@@ -12,10 +12,9 @@
 
 #include <my_string_view.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
+#include <stdio.h>  // stdout
+#include <ctype.h>  // isspace()
+#include <string.h> // strlen()
 
 string_view String_View(str_ptr str){
 

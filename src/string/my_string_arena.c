@@ -11,10 +11,10 @@
  */
 
 #include <my_string_arena.h>
-
-#include <stdlib.h>
-#include <my_string.h>
 #include <my_string_defs.h>
+#include <my_string.h>
+
+#include <stdlib.h> // free, malloc
 
 struct Arena_Info {
     

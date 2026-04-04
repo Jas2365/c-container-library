@@ -17,5 +17,3 @@
 
 #define is_ptr(object) (__builtin_classify_type(object) == __ptr_kind__ )
 #define to_ptr(object) __builtin_choose_expr(is_ptr(object), (object), &(object))
-
-#define universal_access(object, member) (to_ptr(object)->member)

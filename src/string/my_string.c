@@ -11,14 +11,11 @@
  */
 
 #include <my_string.h>
-
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 #include <my_defs.h>
 #include <my_string_arena.h>
+
+#include <string.h>  // memcpy, strlen
+
 
 string String(const string_literal str) {
     if(!str) return null_string;
