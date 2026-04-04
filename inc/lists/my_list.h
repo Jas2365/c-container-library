@@ -67,16 +67,16 @@
 //                          Growth Helper
 // =================================================================
 
-#define list_grow(list) do {                                                                \
-    auto _list_ = to_ptr(list);                                                             \
-    _list_->capacity  = _list_->capacity == 0                                               \
-                        ? _initial_list_size_                                               \
-                        : _list_->capacity * _list_growth_size_;                            \
-    _list_->buffer   = realloc(_list_->buffer, sizeof(*_list_->buffer) * _list_->capacity); \
-    if(!_list_->buffer) {                                                                   \
+#define list_grow(list) do {                                                                    \
+    auto _list_ = to_ptr(list);                                                                 \
+    _list_->capacity  = _list_->capacity == 0                                                   \
+                        ? _initial_list_size_                                                   \
+                        : _list_->capacity * _list_growth_size_;                                \
+    _list_->buffer   = realloc(_list_->buffer, sizeof(*_list_->buffer) * _list_->capacity);     \
+    if(!_list_->buffer) {                                                                       \
         fprintf(stderr, "[LIST]::[ALLOCATION]::[FAILED] AT: %s:%d" endl, __FILE__, __LINE__);   \
-        exit_failure;                                                                       \
-}                                                                                           \
+        exit_failure;                                                                           \
+}                                                                                               \
 } while(0)
 
 // =================================================================
@@ -84,16 +84,16 @@
 // =================================================================
 
 // Pre-Allocation
-#define list_reserve(list, len) do {                                                        \
-    auto _list_ = to_ptr(list);                                                             \
-    if((len) > _list_->capacity) {                                                          \
-        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (len));          \
-        if(!_list_->buffer) {                                                               \
+#define list_reserve(list, len) do {                                                            \
+    auto _list_ = to_ptr(list);                                                                 \
+    if((len) > _list_->capacity) {                                                              \
+        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (len));              \
+        if(!_list_->buffer) {                                                                   \
             fprintf(stderr, "[LIST]::[RESERVE]::[FAILED] AT: %s:%d" endl, __FILE__, __LINE__);  \
-            exit_failure;                                                                   \
-        }                                                                                   \
-        _list_->capacity = (len);                                                           \
-    }                                                                                       \
+            exit_failure;                                                                       \
+        }                                                                                       \
+        _list_->capacity = (len);                                                               \
+    }                                                                                           \
 } while(0)
 
 // _Push_
