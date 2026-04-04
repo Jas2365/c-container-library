@@ -26,17 +26,9 @@
             s64 length;     \
         };                  \
         s64 capacity;       \
-    } T##List;
+    } T##List
 
 #define List(T) T##List 
-
-
-// =================================================================
-//                          Defined Lists
-// =================================================================
-
-// null List
-#define null_List(list) ( (__typeof__(*(to_ptr(list)))) { 0 } )
 
 // =================================================================
 //                          Construction
@@ -121,12 +113,12 @@
 // =================================================================
 
 // Free buffer, reset fields works on stack or heap List
-#define list_free(list) do {            \
-    auto _list_ = to_ptr(list);         \
-    if(_list_->buffer) {                \
-        free(_list_->buffer);           \
-        *_list_ = null_List(_list_);    \
-       }                                \
+#define list_free(list) do {                    \
+    auto _list_ = to_ptr(list);                 \
+    if(_list_->buffer) {                        \
+        free(_list_->buffer);                   \
+        *_list_ = _null_container_(_list_);     \
+       }                                        \
 } while(0)
 
 // Free buffer + the heap allocated List itself

@@ -14,3 +14,130 @@
 #pragma once
 #include <ptr/ptr.h>
 #include <my_list_config.h>
+
+// =================================================================
+//                          Type Defination
+// =================================================================
+
+#define DEFINE_ARRAY(T, N)      \
+    typedef struct {            \
+        T buffer[N];            \
+        union {                 \
+            s64 size;           \
+            s64 length;         \
+        };                      \
+        s64 capacity;           \
+    } T##Array##N               
+
+#define Array(T, N) T##Array##N
+
+// =================================================================
+//                          Construction
+// =================================================================
+
+// Stack: Array(i32, 64) a = array_init(T, N);
+#define array_init(T, N) (Array(T, N)) { .buffer = nullptr, .size = 0, .capacity = 0 }
+
+// Heap: Array(i32, 64)* l = array_alloc(i32, 64);
+#define array_alloc(T, N) ({                                \
+    Array(T, N)* _array_ = calloc(1, sizeof(Array(T, N)));  \
+    _array_;                                                \
+})
+
+// =================================================================
+//                          List Access
+// =================================================================
+
+#define array_size(array)         (to_ptr(array)->size) 
+#define array_capacity(array)     (to_ptr(array)->capacity)
+#define array_buffer(array)       (to_ptr(array)->buffer)
+#define array_isempty(array)      (to_ptr(array)->size == 0)
+#define array_isfull(array)       (to_ptr(array)->size == to_ptr(array)->capacity)
+#define array_remaining(array)    (to_ptr(array)->capacity - to_ptr(array)->size)
+
+// unchecked for out of bounds  
+// in a for loop when index is valid
+#define array_get(array, index)   (to_ptr(array)->buffer[index])
+#define array_first(array)        (to_ptr(array)->buffer[0])
+#define array_last(array)         (to_ptr(array)->buffer[to_ptr(array)->size -1])
+
+// checked for out of bounds
+#define array_get_safe(array, index)  ({    \
+    auto _array_ = to_ptr(array);           \
+    s64 _i_ = (i);                          \
+    _i_ < _array_->size                     \
+        ? & _array_->buffer[_i_]            \
+        : nullptr ;                         \
+})
+
+#define array_first_safe(array) ({          \
+    auto _array_ to_ptr(array);             \
+    _array_->size ? _array_->buffer[0]      \
+                  :  nullptr;               \
+})
+
+#define array_last_safe(array) ({           \
+    auto _array_ to_ptr(array);             \
+    _array_->size                           \
+    ? _array_->buffer[_array_->size -1]     \
+    :  nullptr;                             \
+})
+
+// =================================================================
+//                          Mutation
+// =================================================================
+
+// _Push_
+#define _array_push_success 1
+#define _array_push_failure 0
+
+#define array_push(array, item) ({                  \
+    auto _array_ = to_ptr(array);                   \
+    i32 _ok_ = _array_->size < _array_->capacity;   \
+    if(_ok_) {                                      \
+        _array_->buffer[_array_->size++] = (item)   \
+    }                                               \
+    _ok_;                                           \
+})
+
+// _Push_And_Abort_ on full
+#define array_push_assert(array, item) do {                 \
+    auto _array_ = to_ptr(array);                           \
+    if(_array_->size >= _array_->capacity) {                \
+        fprintf(                                            \
+            stderr,                                         \
+            "[ARRAY]::[OVERFLOW] AT: %s:%d (cap=%zu)"endl,  \
+            __FILE__,                                       \
+            __LINE__,                                       \
+            _array_->capacity                               \
+        );                                                  \
+        exit_failure;                                       \
+    }                                                       \
+    _array_->buffer[_array_->size++] = (item);              \
+} while(0)
+
+// _Pop_
+#define array_pop(array) ({\
+    auto _array = to_ptr(array);        \
+    _array_->buffer[--_array_->size];   \
+})
+
+// unchecked _Set_At_
+#define array_set(array, i, item) do{   \
+    to_ptr(array)->buffer[i] = (item);  \
+} while(0)
+
+// _Insert_
+#define array_insert(array, i, item) ({                                     \
+    auto _array_ = to_ptr(array);                                           \
+    s64 _i_ = (i);                                                          \
+    i32 _ok_ = _array_->size < _array_->capacity && _i_ <= _array_->size;   \
+    if(_ok_) {                                                              \
+        memmove(&_array_->buffer[_i_+1], &_array_->buffer[_i_],             \
+            sizeof(*_array_->buffer) * (_array_->size - _i_)                \
+        );                                                                  \
+        _array_->buffer[_i_] = (item);                                      \
+        _array_->size++;                                                    \
+    }                                                                       \
+    _ok_;                                                                   \
+})

@@ -23,7 +23,7 @@ null Free_Arena();
 i8* Arena_Push(s64 size);
 
 s64 Get_Arena_Index();
-null Inc_Arena_Index(s64 inc);
+i32 Inc_Arena_Index(s64 inc);
 s64 Get_Arena_Capacity();
 i8* Get_Arena_Storage();
 

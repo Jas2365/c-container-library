@@ -12,8 +12,12 @@
 
 #pragma once
 
-#define __ptr_sentinel__ ((null*)0)
-#define __ptr_kind__ (__builtin_classify_type(__ptr_sentinel__))
+#define _ptr_sentinel_ ((null*)0)
+#define _ptr_kind_ (__builtin_classify_type(_ptr_sentinel_))
 
-#define is_ptr(object) (__builtin_classify_type(object) == __ptr_kind__ )
+#define is_ptr(object) (__builtin_classify_type(object) == _ptr_kind_ )
 #define to_ptr(object) __builtin_choose_expr(is_ptr(object), (object), &(object))
+
+#define _null_container_(container) ( ( __typeof__( *( to_ptr(container) ) ) ) { 0 } )
+
+
