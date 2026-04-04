@@ -54,17 +54,25 @@ i8 *Arena_Push(s64 size) {
 
     if(size + Get_Arena_Index() > Get_Arena_Capacity()) return nullptr; // out of memory
     i8* arena_mem = Get_Arena_Storage() + Get_Arena_Index();            // get current index
-    Inc_Arena_Index(size);                                              // increment the index by the length of string
-    return arena_mem;                                                   // return the position of the index
-
+    if(Inc_Arena_Index(size)) {                                         // if possible increment the index by the length of string
+        return arena_mem;                                               // return the position of the index
+    }                                                                   // else nullptr
+    return nullptr;
 }
 
 s64 Get_Arena_Index() {
     return _Global_Arena_->info.current_index;
 }
 
-null Inc_Arena_Index(s64 inc) {
+#define _inc_idx_success_ 1
+#define _inc_idx_failure_ 0
+
+i32 Inc_Arena_Index(s64 inc) {
+    if(_Global_Arena_->info.current_index + inc > Get_Arena_Capacity() ){
+        return _inc_idx_failure_;
+    }
     _Global_Arena_->info.current_index += inc;
+    return _inc_idx_success_;
 }
 
 s64 Get_Arena_Capacity() {

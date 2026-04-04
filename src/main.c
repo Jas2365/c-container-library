@@ -46,6 +46,8 @@ i32 main() {
         printf("%d" endl, x);
     }
 
+    printf("%d %d %d" endl, l.size, l.capacity, l.buffer[0]);
+
     list_free(l);
 
     putchar('[');
@@ -55,6 +57,8 @@ i32 main() {
         putchar(','); 
     }
     printf(" ]" endl);
+
+    printf("%d %d %d" endl, l.size, l.capacity, l.buffer);
 
     // Heap
     List(i32)* ll = list_alloc(i32);

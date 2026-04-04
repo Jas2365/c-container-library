@@ -19,24 +19,25 @@
 
 // here i can replace the initial size and growth size, note: should make a configuration header file that oversees this.
 
-#define __initial_list_size__   ( 8 )
-#define __list_growth_size__    ( 2 )
+#define _initial_list_size_   ( 8 )
+#define _list_growth_size_    ( 2 )
 
 // should also add a list of variable names to avoid such as 
-//  1. __list__
-//  2. __i__
-//  3. __once__
-//  4. __initial_list_size__ 
-//  5. __list_growth_size__ 
+//  1. _list_
+//  2. _i_
+//  3. _once_
+//  4. _initial_list_size_ 
+//  5. _list_growth_size_ 
 
 // one more thing for vs code intellisense       
 // put the following in .vscode/c_cpp_properties.json 
 // "configurations": [{ "intelliSenseMode": "gcc-x64" }]
 // for intelllisense warnings that are caused by to_ptr(object)
 
+// All the functions have passed the test
+
 // list_grow   // can be used to mannually grow 
 
-// tested
 // list_init
 // list_alloc
 

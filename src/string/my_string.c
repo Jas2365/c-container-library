@@ -37,7 +37,7 @@ string nString(const string_literal str, s64 n) {
         .length = n,
         .str = Arena_Push(n),
     };
-    if(result.str) return null_string;
+    if(!result.str) return null_string;
     memcpy(result.str, str, result.length); 
 
     return result;
