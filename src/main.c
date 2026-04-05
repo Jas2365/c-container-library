@@ -20,93 +20,9 @@
 #include <strings/my_string_arena.h>
 #include <lists/my_list.h>
 
-DEFINE_LIST(i32);
-
 i32 main() {
 
-    // stack
-    List(i32) l = list_init;
-
-    list_push(l, 10);
-    list_push(l, 20);
-    list_push(l, 10);
-    list_push(l, 20);
-    list_push(l, 10);
-    list_push(l, 20);
-
-    putchar('[');
-    list_each(l, i) { 
-        printf(" %d", list_get(l, i)); 
-        if(i != list_size(l) -1)
-        putchar(','); 
-    }
-    printf(" ]" endl);
-
-    list_foreach(l, i32, x) {
-        printf("%d" endl, x);
-    }
-
-    printf("%d %d %d" endl, l.size, l.capacity, l.buffer[0]);
-
-    list_free(l);
-
-    putchar('[');
-    list_each(l, i) { 
-        printf(" %d", list_get(l, i)); 
-        if(i != list_size(l) -1)
-        putchar(','); 
-    }
-    printf(" ]" endl);
-
-    printf("%d %d %d" endl, l.size, l.capacity, l.buffer);
-
-    // Heap
-    List(i32)* ll = list_alloc(i32);
-
-    list_reserve(ll, 10);
-
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 23);
-    list_push(ll, 55);
-    list_grow(ll);
-
-    /**
-     * 2 4 8 16 32
-     * 8 16 32
-     * 10 20 40 80 160
-     */
-
-    putchar('[');
-    list_each(ll, i) { 
-        printf(" %d", list_get(ll, i)); 
-        if(i != list_size(ll) -1)
-        putchar(','); 
-    }
-    printf(" ]" endl);
-
-    i32 tt = list_pop(ll);
-
-    printf(" poped    : %d" endl, tt);
-    printf(" size     : %d" endl, list_size(ll));
-    printf(" capacity : %d" endl, list_capacity(ll));
-    printf(" last     : %d" endl, list_last(ll));
-    list_clear(ll);
-    printf(" is_empty : %d" endl, list_isempty(ll));
-    if(list_isempty(ll)) {
-        printf("empty" endl);
-    } else {
-        printf("not empty" endl);
-    }
-
-    list_destroy(ll);
+    
 
     return 0;
 }
@@ -146,4 +62,84 @@ null helper(string_vw temp, i32 i) {
 
     printf(fmt_str endl, arg_stra(hello));
 
-    __Free_Arena__*/
+    __Free_Arena__
+    ===================================================
+
+    Lists
+    // stack
+    List(i32) l = list_init;
+
+    list_push(l, 10);
+    list_push(l, 20);
+
+    putchar('[');
+    list_each(l, i) { 
+        printf(" %d", list_get(l, i)); 
+        if(i != list_size(l) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
+
+    list_foreach(l, i32, x) {
+        printf("%d" endl, x);
+    }
+
+    printf("Before free: %d %d %d" endl, l.size, l.capacity, l.buffer[0]);
+
+    list_free(l);
+
+    printf("After free: %d %d %d" endl, l.size, l.capacity, l.buffer);
+
+    putchar('[');
+    list_each(l, i) { 
+        printf(" %d", list_get(l, i)); 
+        if(i != list_size(l) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
+
+
+    // Heap
+    List(i32)* ll = list_alloc(i32);
+
+    list_reserve(ll, 10);
+
+    list_push(ll, 23);
+    list_push(ll, 23);
+    list_push(ll, 55);
+    list_grow(ll);
+
+    putchar('[');
+    list_each(ll, i) { 
+        printf(" %d", list_get(ll, i)); 
+        if(i != list_size(ll) -1)
+        putchar(','); 
+    }
+    printf(" ]" endl);
+
+    i32 tt = list_pop(ll);
+
+    printf(" poped    : %d" endl, tt);
+    printf(" size     : %d" endl, list_size(ll));
+    printf(" capacity : %d" endl, list_capacity(ll));
+    printf(" last     : %d" endl, list_last(ll));
+    list_clear(ll);
+    printf(" is_empty : %d" endl, list_isempty(ll));
+    if(list_isempty(ll)) {
+        printf("empty" endl);
+    } else {
+        printf("not empty" endl);
+    }
+
+    list_destroy(ll);
+    
+    if(ll) {
+        printf("exist" endl);
+    } else {
+        printf("not exist" endl);
+    }
+
+===================================================
+    
+    
+    */

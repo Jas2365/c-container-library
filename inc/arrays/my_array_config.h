@@ -11,3 +11,53 @@
  */
 
 #pragma once
+
+// should also add a list of variable names to avoid such as 
+//  1. _array_
+//  2. _i_
+//  3. _once_
+//  4. _null_array_
+
+// all array functions
+
+// array_init(T, N)
+// array_alloc(T, N)
+
+// _null_array_(array)
+
+// array_size(array)
+// array_capacity(array)
+// array_buffer(array)
+// array_isempty(array)
+// array_isfull(array)
+// array_remaining(array)
+
+// unchecked
+// array_get(array, index)
+// array_first(array)
+// array_last(array)
+
+// checked
+// array_get_safe(array, index)
+// array_first_safe(array)
+// array_last_safe(array)
+
+// array_push(array, item)
+// array_push_assert(array, item)
+
+// array_pop(array)
+
+// array_set(array, index, item)
+// array_insert(array, index, item)
+
+// array_remove(array, index)
+// array_swap_remove(array, index)
+
+// array_clear(array)
+// array_zero(array)
+
+// array_reset(array)
+// array_destroy(array)
+
+// array_each(array, index)
+// array_foreach(array, T, var)

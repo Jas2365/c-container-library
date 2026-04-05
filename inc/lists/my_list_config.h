@@ -12,22 +12,23 @@
 
 #pragma once
 
+// auto is c23 keyword use __auto_type for older version
 // __auto_type is GCC/Clang compiler builtin. 
 // not from any header. 
 // it predates C23 and works like cpp auto. 
 // it infers the type from right-hand side at compiler time 
 
-// here i can replace the initial size and growth size, note: should make a configuration header file that oversees this.
-
 #define _initial_list_size_   ( 8 )
 #define _list_growth_size_    ( 2 )
+
 
 // should also add a list of variable names to avoid such as 
 //  1. _list_
 //  2. _i_
 //  3. _once_
 //  4. _initial_list_size_ 
-//  5. _list_growth_size_ 
+//  5. _list_growth_size_
+//  6. _null_list_
 
 // one more thing for vs code intellisense       
 // put the following in .vscode/c_cpp_properties.json 
@@ -36,28 +37,31 @@
 
 // All the functions have passed the test
 
-// list_grow   // can be used to mannually grow 
 
 // list_init
-// list_alloc
+// list_alloc(T)
 
-// list_each
-// list_foreach
-// list_free       // no dangling buffer pointer
-// list_destroy   // no dangling pointers
+// _null_list_(list)
 
-// list_size
-// list_capacity
-// list_buffer
-// list_isempty
-// list_get
-// list_last
+// list_size(list)
+// list_capacity(list)
+// list_buffer(list)
+// list_isempty(list)
+// list_get(list, index)
+// list_last(list)
 
-// list_push
-// list_pop
-// list_clear
+// list_grow(list)
 
-// list_reserve   
+// list_reserve(list, size)
+
+// list_push(list, item)
+// list_pop(list)
+// list_clear(list)
+
+// list_free(list)       
+// list_destroy(list)
+// list_each(list, index)
+// list_foreach(list, T, var)
 
 // use list_reserve if you want to double the capacity at a 
 // custom rate such as 

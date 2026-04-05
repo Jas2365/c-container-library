@@ -44,6 +44,29 @@
 })
 
 // =================================================================
+//                          Defined Lists
+// =================================================================
+
+// _Null_List_
+#define _null_list_(list) ( (__typeof__(*(to_ptr(list)))) list_init )
+
+// _Signed_Integer_List_
+DEFINE_LIST(i8);
+DEFINE_LIST(i16);
+DEFINE_LIST(i32);
+DEFINE_LIST(i64);
+
+// _Unsigned_Integer_List_
+DEFINE_LIST(u8);
+DEFINE_LIST(u16);
+DEFINE_LIST(u32);
+DEFINE_LIST(u64);
+
+// _Floating_List_
+DEFINE_LIST(f32);
+DEFINE_LIST(f64);
+
+// =================================================================
 //                          List Access
 // =================================================================
 
@@ -59,6 +82,7 @@
 //                          Growth Helper
 // =================================================================
 
+//_Grow_
 #define list_grow(list) do {                                                                    \
     auto _list_ = to_ptr(list);                                                                 \
     _list_->capacity  = _list_->capacity == 0                                                   \
@@ -68,23 +92,23 @@
     if(!_list_->buffer) {                                                                       \
         fprintf(stderr, "[LIST]::[ALLOCATION]::[FAILED] AT: %s:%d" endl, __FILE__, __LINE__);   \
         exit_failure;                                                                           \
-}                                                                                               \
+    }                                                                                           \
 } while(0)
 
 // =================================================================
 //                          Mutation
 // =================================================================
 
-// Pre-Allocation
-#define list_reserve(list, len) do {                                                            \
+// _Reserve_
+#define list_reserve(list, size) do {                                                            \
     auto _list_ = to_ptr(list);                                                                 \
-    if((len) > _list_->capacity) {                                                              \
-        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (len));              \
+    if((size) > _list_->capacity) {                                                              \
+        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (size));              \
         if(!_list_->buffer) {                                                                   \
             fprintf(stderr, "[LIST]::[RESERVE]::[FAILED] AT: %s:%d" endl, __FILE__, __LINE__);  \
             exit_failure;                                                                       \
         }                                                                                       \
-        _list_->capacity = (len);                                                               \
+        _list_->capacity = (size);                                                               \
     }                                                                                           \
 } while(0)
 
@@ -112,20 +136,23 @@
 //                          Destruction
 // =================================================================
 
-// Free buffer, reset fields works on stack or heap List
+// _Stack_List_
 #define list_free(list) do {                    \
     auto _list_ = to_ptr(list);                 \
     if(_list_->buffer) {                        \
         free(_list_->buffer);                   \
-        *_list_ = _null_container_(_list_);     \
+        list = _null_list_(_list_);             \
        }                                        \
 } while(0)
 
-// Free buffer + the heap allocated List itself
+// _Heap_List_
 #define list_destroy(list) do {     \
-    if(list) {                      \
-        list_free(list);            \
-        free(list);                 \
+    auto _list_ = to_ptr(list);     \
+    if(_list_) {                    \
+        if(_list_->buffer) {        \
+            free(_list_->buffer);   \
+        }                           \
+        free(_list_);               \
         list = nullptr;             \
     }                               \
 } while(0)
@@ -134,11 +161,11 @@
 //                          Iteration
 // =================================================================
 
-// Index Loop: list_each(list, index) { printf("%d" endl, list_get(l, index)); }
+// _Index_Loop_: list_each(list, index) { printf("%d" endl, list_get(l, index)); }
 #define list_each(list, index)                          \
-    for( s64 i = 0; i < to_ptr(list)->size; i++)
+    for( s64 index = 0; index < to_ptr(list)->size; index++)
 
-// Value Loop: list_foreach(list, int, x) { printf("%d" endl, x); }
+// _Value_Loop_: list_foreach(list, int, x) { printf("%d" endl, x); }
 #define list_foreach(list, T, var)                                              \
     for (s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(list)->size; _i_++, _once_ = 1)  \
         for( T var = to_ptr(list)->buffer[_i_]; _once_; _once_ = 0)
