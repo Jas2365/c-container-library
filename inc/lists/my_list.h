@@ -100,15 +100,15 @@ DEFINE_LIST(f64);
 // =================================================================
 
 // _Reserve_
-#define list_reserve(list, size) do {                                                            \
+#define list_reserve(list, size) do {                                                           \
     auto _list_ = to_ptr(list);                                                                 \
-    if((size) > _list_->capacity) {                                                              \
-        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (size));              \
+    if((size) > _list_->capacity) {                                                             \
+        _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (size));             \
         if(!_list_->buffer) {                                                                   \
             fprintf(stderr, "[LIST]::[RESERVE]::[FAILED] AT: %s:%d" endl, __FILE__, __LINE__);  \
             exit_failure;                                                                       \
         }                                                                                       \
-        _list_->capacity = (size);                                                               \
+        _list_->capacity = (size);                                                              \
     }                                                                                           \
 } while(0)
 
