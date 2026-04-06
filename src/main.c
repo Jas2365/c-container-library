@@ -94,7 +94,7 @@ i32 main() {
     } endline;
 
 
-    Array(Card, 52) _Cards_ = array_init(Card, 52);
+    Array(Card, 52)* _Cards_ = array_alloc(Card, 52);
 
     string ss;
     string rr;
@@ -112,7 +112,13 @@ i32 main() {
         }
     }
 
+    printf("size: %d" endl, (_Cards_));
+    // array_destroy(_Cards_);
+
+    printf("size: %d" endl, (_Cards_));
+    if(_Cards_) {printf("exist" endl);} else { printf("not exist" endl);}
     printf("size: %d" endl, array_size(_Cards_));
+
 
     array_each_step(_Cards_, c, 4) {
         printf(fmt_str space fmt_str space, 

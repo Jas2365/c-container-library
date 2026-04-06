@@ -49,8 +49,8 @@
 #define _type_array_deref_(array) (__typeof__(*(to_ptr(array))))
 
 // _Null_Array_
-#define _null_array_(array) ( (_type_array_deref_(array) ) {                                                                              \
-    .capacity   = (s64) ( sizeof(( ( _type_array_deref_(array) *) 0)->buffer) / sizeof(( ( _type_array_deref_(array) *) 0)->buffer[0]))   \
+#define _null_array_(array) (_type_array_deref_(array)  {                                                                                   \
+    .capacity   = (s64) ( sizeof(( (__typeof__(*(to_ptr(array))) *) 0)->buffer) / sizeof(( ( __typeof__(*(to_ptr(array))) *) 0)->buffer[0]))   \
 })
 
 // =================================================================
@@ -192,10 +192,9 @@
 //                          Destruction
 // =================================================================
 
-// It only resets the size to zero no data destruction is done 
 // _Stack_Array_
 #define arrya_reset(array) do {   \
-    array_clear(array);           \
+    array = _null_array_(array);  \
 } while(0)
 
 // _Heap_Array_
@@ -212,11 +211,11 @@
 // =================================================================
 
 // _Index_Loop_
-#define array_each(array, index)                                        \
+#define array_each(array, index)                                                \
     for( s64 index = 0; index < to_ptr(array)->size; index++)
 
 // _Index_Step_Loop_
-#define array_each_step(array, index, step)                                        \
+#define array_each_step(array, index, step)                                     \
     for( s64 index = 0; index < to_ptr(array)->size; index += step)
 
 // _Value_Loop_
