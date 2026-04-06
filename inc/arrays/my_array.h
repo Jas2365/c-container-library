@@ -49,8 +49,8 @@
 #define _type_array_deref_(array) (__typeof__(*(to_ptr(array))))
 
 // _Null_Array_
-#define _null_array_(array) (_type_array_deref_(array)  {                                                                                   \
-    .capacity   = (s64) ( sizeof(( (__typeof__(*(to_ptr(array))) *) 0)->buffer) / sizeof(( ( __typeof__(*(to_ptr(array))) *) 0)->buffer[0]))   \
+#define _null_array_(array) (_type_array_deref_(array)  {                                                                                       \
+    .capacity   = (s64) ( sizeof(( (__typeof__(*(to_ptr(array))) *) 0)->buffer) / sizeof(( ( __typeof__(*(to_ptr(array))) *) 0)->buffer[0]))    \
 })
 
 // =================================================================
