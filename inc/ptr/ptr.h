@@ -18,6 +18,5 @@
 #define is_ptr(object) (__builtin_classify_type(object) == _ptr_kind_ )
 #define to_ptr(object) __builtin_choose_expr(is_ptr(object), (object), &(object))
 
-#define _null_container_(container) ( ( __typeof__( *( to_ptr(container) ) ) ) { 0 } )
 
 
