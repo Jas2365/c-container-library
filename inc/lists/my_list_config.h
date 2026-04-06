@@ -10,17 +10,13 @@
  * OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-#pragma once
+ #pragma once
 
 // auto is c23 keyword use __auto_type for older version
 // __auto_type is GCC/Clang compiler builtin. 
 // not from any header. 
 // it predates C23 and works like cpp auto. 
 // it infers the type from right-hand side at compiler time 
-
-#define _initial_list_size_   ( 8 )
-#define _list_growth_size_    ( 2 )
-
 
 // should also add a list of variable names to avoid such as 
 //  1. _list_

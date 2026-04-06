@@ -14,6 +14,9 @@
 #include <ptr/ptr.h>
 #include <my_list_config.h>
 
+#define _initial_list_size_   ( 8 )
+#define _list_growth_size_    ( 2 )
+
 // =================================================================
 //                          Type Defination
 // =================================================================
