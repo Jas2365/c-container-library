@@ -164,6 +164,9 @@ DEFINE_LIST(f64);
 // _Index_Loop_: list_each(list, index) { printf("%d" endl, list_get(l, index)); }
 #define list_each(list, index)                          \
     for( s64 index = 0; index < to_ptr(list)->size; index++)
+// _Index_Step_Loop_
+#define list_each_step(list, index, step)                          \
+    for( s64 index = 0; index < to_ptr(list)->size; index += step)
 
 // _Value_Loop_: list_foreach(list, int, x) { printf("%d" endl, x); }
 #define list_foreach(list, T, var)                                              \

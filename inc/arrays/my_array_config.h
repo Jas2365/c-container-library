@@ -63,4 +63,5 @@
 // array_destroy(array)
 
 // array_each(array, index)
+// array_each_step(array, index, step)
 // array_foreach(array, T, var)

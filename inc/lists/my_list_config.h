@@ -62,7 +62,9 @@
 
 // list_free(list)       
 // list_destroy(list)
+
 // list_each(list, index)
+// list_each_step(list, index, step)
 // list_foreach(list, T, var)
 
 // use list_reserve if you want to double the capacity at a 
