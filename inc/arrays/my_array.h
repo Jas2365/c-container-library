@@ -49,9 +49,7 @@
 #define _type_array_deref_(array) (__typeof__(*(to_ptr(array))))
 
 // _Null_Array_
-#define _null_array_(array) ( (_type_array_deref_(array)) {                                                                               \
-    .buffer     = { 0 },                                                                                                                  \
-    .size       = 0,                                                                                                                      \
+#define _null_array_(array) ( (_type_array_deref_(array) ) {                                                                              \
     .capacity   = (s64) ( sizeof(( ( _type_array_deref_(array) *) 0)->buffer) / sizeof(( ( _type_array_deref_(array) *) 0)->buffer[0]))   \
 })
 
@@ -103,7 +101,7 @@
     auto _array_ = to_ptr(array);                   \
     i32 _ok_ = _array_->size < _array_->capacity;   \
     if(_ok_) {                                      \
-        _array_->buffer[_array_->size++] = (item)   \
+        _array_->buffer[_array_->size++] = (item);  \
     }                                               \
     _ok_;                                           \
 })
@@ -194,10 +192,10 @@
 //                          Destruction
 // =================================================================
 
+// It only resets the size to zero no data destruction is done 
 // _Stack_Array_
-#define arrya_reset(array) do {     \
-    auto _array_ = to_ptr(array);   \
-    array = _null_array_(_array_);  \
+#define arrya_reset(array) do {   \
+    array_clear(array);           \
 } while(0)
 
 // _Heap_Array_
@@ -217,7 +215,13 @@
 #define array_each(array, index)                                        \
     for( s64 index = 0; index < to_ptr(array)->size; index++)
 
+// _Index_Step_Loop_
+#define array_each_step(array, index, step)                                        \
+    for( s64 index = 0; index < to_ptr(array)->size; index += step)
+
 // _Value_Loop_
-#define array_foreach(array, T, var)                                    \
-    for( s64 _i_ = 0; _once_ = 1; _i_ < to_ptr(array)->size; _i_++)     \
+#define array_foreach(array, T, var)                                            \
+    for( s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(array)->size; _i_++, _once_ =1)  \
         for(T var = to_ptr(array)->buffer[_i_]; _once_; _once_ = 0 )
+
+

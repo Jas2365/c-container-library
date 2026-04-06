@@ -20,6 +20,9 @@
 
 // all array functions
 
+// DEFINE_ARRAY(T, N)
+// Array(T, N)
+
 // array_init(T, N)
 // array_alloc(T, N)
 

@@ -35,8 +35,10 @@
 // "configurations": [{ "intelliSenseMode": "gcc-x64" }]
 // for intelllisense warnings that are caused by to_ptr(object)
 
-// All the functions have passed the test
+// all list functions
 
+// DEFINE_LIST(T)
+// List(T)
 
 // list_init
 // list_alloc(T)
