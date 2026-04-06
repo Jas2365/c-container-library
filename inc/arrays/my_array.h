@@ -39,7 +39,8 @@
 
 // Heap: Array(i32, 64)* l = array_alloc(i32, 64);
 #define array_alloc(T, N) ({                                \
-    Array(T, N)* _array_ = calloc(1, sizeof(Array(T, N)));  \
+    Array(T, N)* _array_ = calloc(1, sizeof(Array(T, N) )); \
+    _array_->capacity = N;                                  \
     _array_;                                                \
 })
 // =================================================================
@@ -101,7 +102,8 @@
     auto _array_ = to_ptr(array);                   \
     i32 _ok_ = _array_->size < _array_->capacity;   \
     if(_ok_) {                                      \
-        _array_->buffer[_array_->size++] = (item);  \
+        _array_->buffer[_array_->size] = (item);    \
+        _array_->size++;                            \
     }                                               \
     _ok_;                                           \
 })

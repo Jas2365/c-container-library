@@ -33,6 +33,7 @@ DEFINE_LIST(Card);
 DEFINE_ARRAY(string, 12);
 DEFINE_ARRAY(string, 4);
 DEFINE_ARRAY(Card, 52);
+DEFINE_ARRAY(i8, 5);
 
 i32 main() {
     __Init_Arena__                                                                          // strings memory
@@ -96,6 +97,11 @@ i32 main() {
 
     Array(Card, 52)* _Cards_ = array_alloc(Card, 52);
 
+    printf("size of card %d bytes"endl, sizeof(Array(i8, 5)));
+    printf("size of card %d bytes"endl, sizeof(Card) * 52);
+    printf("size of card %d bytes"endl, sizeof(s64) * 2);
+    printf("size of card %d bytes"endl, sizeof(Array(Card, 52)));
+
     string ss;
     string rr;
 
@@ -107,16 +113,11 @@ i32 main() {
                 .rank = rr,
                 .suit = ss,
             };
-            array_push(_Cards_, c);
+            array_push_assert(_Cards_, c);
             printf(fmt_str space fmt_str endl, arg_stra(ss), arg_stra(rr));
         }
     }
 
-    printf("size: %d" endl, (_Cards_));
-    // array_destroy(_Cards_);
-
-    printf("size: %d" endl, (_Cards_));
-    if(_Cards_) {printf("exist" endl);} else { printf("not exist" endl);}
     printf("size: %d" endl, array_size(_Cards_));
 
 
