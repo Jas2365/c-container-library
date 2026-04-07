@@ -20,9 +20,7 @@
  *       typedef List(i8) string;
  *       Should work in theory
  *       But the not yet made grabage collector implemetation for Lists would affect string 
-*/
-typedef struct string_info string_info;
-
+ */
 typedef struct string {
     s64  length;
     i8*  str;

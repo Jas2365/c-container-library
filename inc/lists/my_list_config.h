@@ -10,7 +10,7 @@
  * OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
- #pragma once
+//  #pragma once
 
 // auto is c23 keyword use __auto_type for older version
 // __auto_type is GCC/Clang compiler builtin. 

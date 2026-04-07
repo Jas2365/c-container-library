@@ -24,20 +24,12 @@ struct string_info {
 string String(const string_literal str) {
     if(!str) return null_string;
     
-    s64 len = strlen(str);
-    i8* string_storage = Arena_Push(len);
     
-    if(!string_storage) return null_string;
-
-    string_info info = {
-        .start_pos = string_storage,
-        .end_pos = string_storage + len,
-    };
-
     string result = {
-        .length = len,
-        .str = string_storage,
+        .length = strlen(str),
+        .str = Arena_Push(result.length),
     };
+    if(!result.str) return null_string;
     
     memcpy(result.str, str, result.length);
     

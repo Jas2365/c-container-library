@@ -10,7 +10,7 @@
  * OR CONDITIONS OF ANY KIND, either express or implied.
  */
 
-#pragma once
+// #pragma once
 
 // should also add a list of variable names to avoid such as 
 //  1. _array_
