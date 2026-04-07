@@ -49,6 +49,7 @@
 // array_push_assert(array, item)
 
 // array_pop(array)
+// array_pop_assert(array)
 
 // array_set(array, index, item)
 // array_insert(array, index, item)

@@ -55,6 +55,7 @@
 // _Null_List_
 #define _null_list_(list) ( (__typeof__(*(to_ptr(list)))) list_init )
 
+#include <my_ints.h>
 // _Signed_Integer_List_
 DEFINE_LIST(i8);
 DEFINE_LIST(i16);
@@ -80,6 +81,7 @@ DEFINE_LIST(f64);
 #define list_buffer(list)       (to_ptr(list)->buffer)
 #define list_isempty(list)      (to_ptr(list)->size == 0)
 #define list_get(list, index)   (to_ptr(list)->buffer[index])
+#define list_first(list)        (to_ptr(list)->buffer[0])
 #define list_last(list)         (to_ptr(list)->buffer[to_ptr(list)->size -1])
 
 
@@ -121,7 +123,7 @@ DEFINE_LIST(f64);
 #define list_push(list, item) do {              \
     auto _list_ = to_ptr(list);                 \
     if(_list_->size == _list_->capacity) {      \
-     list_grow(list);                           \
+        list_grow(list);                        \
     }                                           \
     _list_->buffer[_list_->size++] = (item);    \
 } while(0)
@@ -130,6 +132,21 @@ DEFINE_LIST(f64);
 #define list_pop(list) ({               \
     auto _list_ = to_ptr(list);         \
     _list_->buffer[--_list_->size];     \
+})
+
+// _Pop_And_Abort_ on null
+#define list_pop_assert(list) ({                    \
+    auto _list_ = to_ptr(list);                     \
+    if(_list_->size <= 0) {                         \
+        fprintf(                                    \
+            stderr,                                 \
+            "[LIST]::[UNDERFLOW] AT: %s:%d"endl,    \
+            __FILE__,                               \
+            __LINE__                                \
+        );                                          \
+        exit_failure;                               \
+    }                                               \
+    _list_->buffer[--_list_->size];                 \
 })
 
 // _Clear_

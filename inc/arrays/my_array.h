@@ -133,6 +133,21 @@
     _array_->buffer[--_array_->size];   \
 })
 
+// _Pop_And_Abort_ on null
+#define array_pop_assert(array) ({                  \
+    auto _array_ = to_ptr(array);                   \
+    if(_array_->size <= 0) {                        \
+        fprintf(                                    \
+            stderr,                                 \
+            "[ARRAY]::[UNDERFLOW] AT: %s:%d"endl,   \
+            __FILE__,                               \
+            __LINE__                                \
+        );                                          \
+        exit_failure;                               \
+    }                                               \
+    _array_->buffer[--_array_->size];               \
+})
+
 // unchecked 
 // _Set_At_
 #define array_set(array, index, item) do{   \

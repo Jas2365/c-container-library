@@ -54,6 +54,8 @@
 
 // list_push(list, item)
 // list_pop(list)
+// list_pop_assert(list)
+
 // list_clear(list)
 
 // list_free(list)       
