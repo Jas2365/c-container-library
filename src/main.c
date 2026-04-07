@@ -40,20 +40,40 @@ i32 main() {
     _Init_Arena_
 
     Array(string, 4) st = array_init(string, 4);
+    array_push(st, String("one"));
+    array_push(st, String("two"));
+    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    
+    st = _null_array_(st);
+    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    
+    array_push(st, String("one"));
+    array_push(st, String("two"));
+    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    
 
-    array_push_assert(st, String("hello"));
+    // array_push_assert(st, String("hello"));
     
 
 
-    string temp =  array_pop_assert(st);
+    // string temp =  array_pop_assert(st);
 
-    printf(fmt_str endl, arg_str(temp));
+    // printf(fmt_str endl, arg_str(temp));
     
 
     // List(i32) temp = list_init;
     
-    // printf("size %zu"endl , list_size(temp));
-    // list_pop_assert(temp);
+    // list_push(temp, 23);
+    // list_pop(temp);
+    // list_pop(temp);
+    // printf("size     %zu"endl , list_size(temp));
+    // printf("capacity %zu"endl , list_capacity(temp));
+    
+    // i32 kk = list_pop_assert(temp);
+    // printf("poped %d"endl , kk);
+    // kk = list_pop_assert(temp);
+    // printf("poped %d"endl , kk);
+
     // printf("size %zu"endl , list_size(temp));
 
     _Free_Arena_

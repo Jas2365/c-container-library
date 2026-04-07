@@ -15,7 +15,7 @@
 
 /**
  * TODO: Should decide to make an Arena Allocator for Arrays 
-*/
+ */
 
 // =================================================================
 //                          Type Defination
@@ -61,18 +61,19 @@
 //                          List Access
 // =================================================================
 
+#define array_buffer(array)       (to_ptr(array)->buffer)
 #define array_size(array)         (to_ptr(array)->size) 
 #define array_capacity(array)     (to_ptr(array)->capacity)
-#define array_buffer(array)       (to_ptr(array)->buffer)
-#define array_isempty(array)      (to_ptr(array)->size == 0)
-#define array_isfull(array)       (to_ptr(array)->size == to_ptr(array)->capacity)
-#define array_remaining(array)    (to_ptr(array)->capacity - to_ptr(array)->size)
+
+#define array_isempty(array)      (array_size(array) == 0)
+#define array_isfull(array)       (array_size(array) == array_capacity(array))
+#define array_remaining(array)    (array_capacity(array) - array_size(array))
 
 // unchecked for out of bounds  
 // in a for loop when index is valid
-#define array_get(array, index)   (to_ptr(array)->buffer[index])
-#define array_first(array)        (to_ptr(array)->buffer[0])
-#define array_last(array)         (to_ptr(array)->buffer[to_ptr(array)->size -1])
+#define array_get(array, index)   (array_buffer(array)[index])
+#define array_first(array)        (array_buffer(array)[0])
+#define array_last(array)         (array_buffer(array)[array_size(array) -1])
 
 // checked for out of bounds
 #define array_get_safe(array, index)  ({    \

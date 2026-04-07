@@ -75,7 +75,8 @@ DEFINE_STACK(f64);
 #define stack_size(stack)           (to_ptr(stack)->size)
 #define stack_capacity(stack)       (to_ptr(stack)->capacity)
 #define stack_buffer(stack)         (to_ptr(stack)->buffer)
-#define stack_isempty(stack)        (to_ptr(stack)->size == 0)
+
+#define stack_isempty(stack)        (stack_size(stack) == 0)
 
 // =================================================================
 //                          Growth Helper
@@ -157,5 +158,4 @@ DEFINE_STACK(f64);
         stack = nullptr;                \
     }                                   \
 } while(0)
-
 

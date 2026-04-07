@@ -76,14 +76,16 @@ DEFINE_LIST(f64);
 //                          List Access
 // =================================================================
 
+#define list_buffer(list)       (to_ptr(list)->buffer)
 #define list_size(list)         (to_ptr(list)->size) 
 #define list_capacity(list)     (to_ptr(list)->capacity)
-#define list_buffer(list)       (to_ptr(list)->buffer)
-#define list_isempty(list)      (to_ptr(list)->size == 0)
-#define list_get(list, index)   (to_ptr(list)->buffer[index])
-#define list_first(list)        (to_ptr(list)->buffer[0])
-#define list_last(list)         (to_ptr(list)->buffer[to_ptr(list)->size -1])
 
+#define list_isempty(list)      (list_size(list) == 0)
+#define list_get(list, index)   (list_buffer(list)[index])
+#define list_first(list)        (list_buffer(list)[0])
+#define list_last(list)         (list_buffer(list)[list_size(size) -1])
+
+#define list_assert(list)       (list_size(list) >= list_capacity(list))
 
 // =================================================================
 //                          Growth Helper
