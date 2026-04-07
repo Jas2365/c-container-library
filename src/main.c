@@ -36,8 +36,34 @@ DEFINE_ARRAY(Card, 52);
 DEFINE_ARRAY(i8, 5);
 
 i32 main() {
-    _Init_Arena_                                                                          // strings memory
     
+    _Init_Arena_
+
+    Array(string, 4) st = array_init(string, 4);
+
+    array_push_assert(st, String("hello"));
+    
+
+
+    string temp =  array_pop_assert(st);
+
+    printf(fmt_str endl, arg_str(temp));
+    
+
+    // List(i32) temp = list_init;
+    
+    // printf("size %zu"endl , list_size(temp));
+    // list_pop_assert(temp);
+    // printf("size %zu"endl , list_size(temp));
+
+    _Free_Arena_
+
+    return 0;
+}
+
+    /*
+    _Init_Arena_                                                                          // strings memory
+
     const string _A_ = String( "A" );
     const string _2_ = String( "2" );
     const string _3_ = String( "3" );
@@ -179,8 +205,9 @@ i32 main() {
     // list_free(deck);
 
     _Free_Arena_                                                                      // free not needed for small projects
-    return 0;
-}
+   
+    */
+
 
 /*
 
