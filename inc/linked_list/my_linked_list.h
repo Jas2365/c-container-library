@@ -12,13 +12,7 @@
 
 #pragma once
 #include <ptr/ptr.h>
-/**
- * struct st {
- *  i32 one;
- * i32 two;
- * i32 three;
- * }
- */
+
 #define DEFINE_NODE(T)          \
     typedef struct T##Node {    \
         T node_val;             \
@@ -26,10 +20,6 @@
     }T##Node
 
 #define Node(T) T##Node
-
-// i32Node
-// i32Node*
-// i32LinkdList
 
 #define DEFINE_LINKED_LIST(T)       \
     typedef struct T##LinkedList {  \
