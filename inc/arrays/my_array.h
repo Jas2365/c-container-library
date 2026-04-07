@@ -21,14 +21,14 @@
 //                          Type Defination
 // =================================================================
 
-#define DEFINE_ARRAY(T, N)      \
-    typedef struct {            \
-        T buffer[N];            \
-        union {                 \
-            s64 size;           \
-            s64 length;         \
-        };                      \
-        s64 capacity;           \
+#define DEFINE_ARRAY(T, N)          \
+    typedef struct T##Array##N  {   \
+        T buffer[N];                \
+        union {                     \
+            s64 size;               \
+            s64 length;             \
+        };                          \
+        s64 capacity;               \
     } T##Array##N               
 
 #define Array(T, N) T##Array##N

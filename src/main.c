@@ -20,36 +20,49 @@
 #include <strings/my_string_arena.h>
 #include <lists/my_list.h>
 #include <arrays/my_array.h>
+#include <linked_list/my_linked_list.h>
 
+// typedef struct Rank { string str; i32 val; } Rank;
+// typedef struct Suit { string str; i32 val; } Suit;
+// typedef struct Card { string suit; string rank; } Card;
 
-typedef struct Rank { string str; i32 val; } Rank;
-typedef struct Suit { string str; i32 val; } Suit;
-typedef struct Card { string suit; string rank; } Card;
+// DEFINE_LIST(Rank);
+// DEFINE_LIST(Suit);
+// DEFINE_LIST(Card);
 
-DEFINE_LIST(Rank);
-DEFINE_LIST(Suit);
-DEFINE_LIST(Card);
+// DEFINE_ARRAY(string, 12);
+// DEFINE_ARRAY(string, 4);
+// DEFINE_ARRAY(Card, 52);
+// DEFINE_ARRAY(i8, 5);
 
-DEFINE_ARRAY(string, 12);
-DEFINE_ARRAY(string, 4);
-DEFINE_ARRAY(Card, 52);
-DEFINE_ARRAY(i8, 5);
+typedef struct st {
+    i32 one;
+    i32 two;
+} st;
+
+DEFINE_NODE(st);
+DEFINE_LINKED_LIST(st);
 
 i32 main() {
     
-    _Init_Arena_
 
-    Array(string, 4) st = array_init(string, 4);
-    array_push(st, String("one"));
-    array_push(st, String("two"));
-    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    LINKED_LIST(st) ss;
+
     
-    st = _null_array_(st);
-    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+
+    // _Init_Arena_
+
+    // Array(string, 4) st = array_init(string, 4);
+    // array_push(st, String("one"));
+    // array_push(st, String("two"));
+    // printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
     
-    array_push(st, String("one"));
-    array_push(st, String("two"));
-    printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    // st = _null_array_(st);
+    // printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
+    
+    // array_push(st, String("one"));
+    // array_push(st, String("two"));
+    // printf("size %d, capacity %d" endl, array_size(st), array_capacity(st));
     
 
     // array_push_assert(st, String("hello"));
@@ -76,7 +89,7 @@ i32 main() {
 
     // printf("size %zu"endl , list_size(temp));
 
-    _Free_Arena_
+    // _Free_Arena_
 
     return 0;
 }

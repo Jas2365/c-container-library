@@ -19,14 +19,14 @@
 //                          Type Defination
 // =================================================================
 
-#define DEFINE_STACK(T)  \
-    typedef struct {     \
-        T* buffer;       \
-        union {          \
-            s64 size;    \
-            s64 length;  \
-        };               \
-        s64 capacity;    \
+#define DEFINE_STACK(T)         \
+    typedef struct T##Stack {   \
+        T* buffer;              \
+        union {                 \
+            s64 size;           \
+            s64 length;         \
+        };                      \
+        s64 capacity;           \
     } T##Stack
 
 #define Stack(T) T##Stack

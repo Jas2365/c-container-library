@@ -23,14 +23,14 @@
 //                          Type Defination
 // =================================================================
 
-#define DEFINE_LIST(T)      \
-    typedef struct {        \
-        T* buffer;          \
-        union {             \
-            s64 size;       \
-            s64 length;     \
-        };                  \
-        s64 capacity;       \
+#define DEFINE_LIST(T)          \
+    typedef struct T##List {    \
+        T* buffer;              \
+        union {                 \
+            s64 size;           \
+            s64 length;         \
+        };                      \
+        s64 capacity;           \
     } T##List
 
 #define List(T) T##List 
