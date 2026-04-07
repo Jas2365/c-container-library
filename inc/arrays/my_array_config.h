@@ -12,7 +12,7 @@
 
 // #pragma once
 
-// should also add a list of variable names to avoid such as 
+//  list of variable names to avoid such as 
 //  1. _array_
 //  2. _i_
 //  3. _once_
