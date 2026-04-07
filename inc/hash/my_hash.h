@@ -21,9 +21,8 @@
 
 /**
  * NOTE: will continue after making other containers
+ * TODO: maybe try to make a different readable approach then this
  */
-
-
 
 // Hashbrown hashtable, which implements Google's Swisstable open addressingwith SIMD-accelerated metadata lookups
 
