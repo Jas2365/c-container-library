@@ -12,6 +12,8 @@
 
 #pragma once 
 
+#include <ptr/ptr.h>
+
 #define _arena_size_undefined_ ( 0 )
 #define _arena_size__64_kilo_bytes_ ( 1LL << 16 )
 #define _arena_size___4_mega_bytes_ ( 1LL << 22 )
@@ -29,5 +31,9 @@
 
 #define fmt_str "%.*s"
 
-#define arg_stra(sv) (sv).length, (sv).str
+// _Generic_
+#define arg_str(sv) arg_strp(to_ptr(sv))
+
+// _Normal_
+#define arg_stra(sv) (sv). length, (sv). str
 #define arg_strp(sv) (sv)->length, (sv)->str
