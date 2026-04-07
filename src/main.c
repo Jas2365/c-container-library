@@ -36,7 +36,7 @@ DEFINE_ARRAY(Card, 52);
 DEFINE_ARRAY(i8, 5);
 
 i32 main() {
-    __Init_Arena__                                                                          // strings memory
+    _Init_Arena_                                                                          // strings memory
     
     const string _A_ = String( "A" );
     const string _2_ = String( "2" );
@@ -178,7 +178,7 @@ i32 main() {
     // list_free(Spade_Suit);
     // list_free(deck);
 
-    __Free_Arena__                                                                      // free not needed for small projects
+    _Free_Arena_                                                                      // free not needed for small projects
     return 0;
 }
 

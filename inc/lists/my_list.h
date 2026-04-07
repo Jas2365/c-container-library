@@ -14,6 +14,9 @@
 #include <ptr/ptr.h>
 #include <my_list_config.h>
 
+/**
+ * TODO: Should decide to make an Arena Allocator for Lists or not 
+*/
 #define _initial_list_size_   ( 8 )
 #define _list_growth_size_    ( 2 )
 

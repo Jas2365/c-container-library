@@ -14,6 +14,10 @@
 #include <ptr/ptr.h>
 #include <my_list_config.h>
 
+/**
+ * TODO: Should decide to make an Arena Allocator for Arrays 
+*/
+
 // =================================================================
 //                          Type Defination
 // =================================================================

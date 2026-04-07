@@ -27,12 +27,12 @@ i32 Inc_Arena_Index(s64 inc);
 s64 Get_Arena_Capacity();
 i8* Get_Arena_Storage();
 
-#ifndef __Init_Arena__
-#define __Init_Arena__ Init_Arena();
+#ifndef _Init_Arena_
+#define _Init_Arena_ Init_Arena();
 #endif
 
-#ifndef __Free_Arena__
-#define __Free_Arena__ Free_Arena();
+#ifndef _Free_Arena_
+#define _Free_Arena_ Free_Arena();
 #endif
 
 

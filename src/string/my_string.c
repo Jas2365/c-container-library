@@ -16,15 +16,29 @@
 
 #include <string.h>  // memcpy, strlen
 
+struct string_info {
+    const null* start_pos;
+    const null* end_pos;
+};
 
 string String(const string_literal str) {
     if(!str) return null_string;
     
-    string result = {
-        .length = strlen(str),
-        .str = Arena_Push(result.length),
+    s64 len = strlen(str);
+    i8* string_storage = Arena_Push(len);
+    
+    if(!string_storage) return null_string;
+
+    string_info info = {
+        .start_pos = string_storage,
+        .end_pos = string_storage + len,
     };
-    if(!result.str) return null_string;
+
+    string result = {
+        .length = len,
+        .str = string_storage,
+    };
+    
     memcpy(result.str, str, result.length);
     
     return result;
