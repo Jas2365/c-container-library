@@ -19,6 +19,12 @@
 #include <string.h>
 #include <stdio.h>
 
+/**
+ * NOTE: will continue after making other containers
+ */
+
+
+
 // Hashbrown hashtable, which implements Google's Swisstable open addressingwith SIMD-accelerated metadata lookups
 
 /**
