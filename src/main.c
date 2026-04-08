@@ -54,33 +54,52 @@ null print_node(Node(st)* n) {
 
 i32 main() {
     
-    LINKED_LIST(st) ss = linkedlist_init(st);
+    List(i32) lm = list_init;
 
-    for(i32 i = 0; i<5; i++){
-        st tt = {
-            .one = i,
-            .two = i+5,
-        };
-        linkedlist_append_end(ss, st, tt);
+    for(i32 i = 0; i< 5; i++) {
+        list_push(lm, i);
     }
-    for(i32 i = 5; i<5+5; i++){
-        st tt = {
-            .one = i,
-            .two = i+5,
-        };
-        linkedlist_append_begin(ss, st, tt);
-    }
-    printf("size : %d"endl, ss.size);
+
+    list_each(lm, i) {
+        printf("%d ", list_get(lm, i));
+    } endline;
+
+    list_foreach(lm, v) {
+        printf("%d ", v);
+    } endline;
+
+    // LINKED_LIST(st) ss = linkedlist_init(st);
+
+    // for(i32 i = 0; i<5; i++){
+    //     st tt = {
+    //         .one = i,
+    //         .two = i+5,
+    //     };
+    //     linkedlist_append_end(ss, st, tt);
+    // }
+    // for(i32 i = 1; i<5; i++){
+    //     st tt = {
+    //         .one = i,
+    //         .two = i+5,
+    //     };
+    //     linkedlist_append_begin(ss, st, tt);
+    // }
+    // printf("size : %d"endl, ss.size);
+
+    // printf("For Loop:"endl);
+    // linkedlist_each(linkedlist_iter(ss), it) {
+    //     print_node(it.curr);
+    // } endline;
+    
+    // printf("While Loop:"endl);
+    // Iterator(st) it2 = ss.iter;
+    // while(Iter(it2)) {
+    //     print_node(Iter(it2));
+    //     Iter_Next(it2);
+    // } endline;
 
     
 
-    for(Iterator(st) it = ss.riter ; it.curr; Iter_Next(it)) {
-        print_node(it.curr);
-    }
-
-    
-
-    // Iterator(st) it2;
     // it2 = iter_init(st, ss.begin_node);
     
     // while(it2.curr) {

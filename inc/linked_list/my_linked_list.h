@@ -76,6 +76,17 @@
     _node_;                                         \
 })
 
+// =================================================================
+//                          List Access
+// =================================================================
+
+#define linkedlist_bn(linkedlist)       (to_ptr(linkedlist)->begin_node)
+#define linkedlist_en(linkedlist)       (to_ptr(linkedlist)->end_node)
+#define linkedlist_size(linkedlist)     (to_ptr(linkedlist)->size)
+#define linkedlist_iter(linkedlist)     (to_ptr(linkedlist)->iter)
+#define linkedlist_riter(linkedlist)    (to_ptr(linkedlist)->riter)
+
+#define linkedlist_isempty(linkedlist)  (linkedlist_size(linkedlist) == 0)
 
 // =================================================================
 //                          Mutation
@@ -148,13 +159,46 @@
 
 // it++
 // for(Iterator(st) it = ss.iter ; it.curr; Iter_Next(it)) {}
-#define Iter_Next(it) ({                                                \
-   auto _it_   = to_ptr(it);                                            \
-   auto _next_ =                                                        \
-    (__typeof__(_it_->curr)) ((p64)(_it_->curr->zored) ^ (_it_->prev)); \
-    _it_->prev  = (p64)_it_->curr;                                      \
-    _it_->curr  = _next_;                                               \
+#define Iter_Next(it) ({                                                    \
+   auto _it_   = to_ptr(it);                                                \
+   auto _next_ =                                                            \
+    (__typeof__(_it_->curr)) ((p64)(_it_->curr->zored) ^ (_it_->prev));     \
+    _it_->prev  = (p64)_it_->curr;                                          \
+    _it_->curr  = _next_;                                                   \
 })
 
+// it.curr
+// checks if curr exist or not nullptr or zero
+#define Iter(it) ({ auto _it_ = to_ptr(it); _it_->curr; })
 
+#define linkedlist_each(iter, _it_) \
+    for(__typeof__(linkedlist_iter(ss)) _it_ = (iter); Iter(_it_); Iter_Next(_it_))
 
+#define linkedlist_foreach(iter, T, var)                                              \
+    for (s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(list)->size; _i_++, _once_ = 1)  \
+        for( T var = to_ptr(list)->buffer[_i_]; _once_; _once_ = 0)
+
+/**
+ * Macro Loops
+ * printf("For Loop:"endl);
+ * linkedlist_each(linkedlist_iter(ss), it) {
+ *     print_node(it.curr);
+ * } endline;
+ * 
+ * 
+ */
+
+/** 
+ *  Normal loops
+ *  printf("For Loop:"endl);
+ *  for(__typeof__(linkedlist_iter(ss)) it = ss.iter ; Iter(it); Iter_Next(it)) {
+ *      print_node(it.curr);
+ *  } endline;
+ *   
+ *  printf("While Loop:"endl);
+ *  Iterator(st) it2 = ss.iter;
+ *  while(Iter(it2)) {
+ *      print_node(Iter(it2));
+ *      Iter_Next(it2);
+ *  } endline;
+ */
