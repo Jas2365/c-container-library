@@ -43,12 +43,11 @@ typedef struct st {
 
 DEFINE_LINKED_LIST(st);
 
-
 null print_node(Node(st)* n) {
     printf("Node: v0: %-2d, v1: %-2d, xored: %p"endl, 
-            n->node_val.one,    
-            n->node_val.two,    
-            n->zored    
+        n->node_val.one,    
+        n->node_val.two,    
+        n->zored    
     );
 }
 
@@ -77,13 +76,13 @@ i32 main() {
         };
         linkedlist_append_end(ss, st, tt);
     }
-    for(i32 i = 1; i<5; i++){
-        st tt = {
-            .one = i,
-            .two = i+5,
-        };
-        linkedlist_append_begin(ss, st, tt);
-    }
+    // for(i32 i = 1; i<5; i++){
+        // st tt = {
+        //     .one = i,
+        //     .two = i+5,
+        // };
+        // linkedlist_append_begin(ss, st, tt);
+    // }
     printf("size : %d"endl, ss.size);
 
     printf("For Loop:"endl);
@@ -95,8 +94,6 @@ i32 main() {
     linkedlist_foreach(ss, var) {
         print_node(var);
     } endline;
-
-    
 
     // it2 = iter_init(st, ss.begin_node);
     
