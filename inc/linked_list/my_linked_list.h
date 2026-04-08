@@ -68,12 +68,15 @@
     _linked_list_;                                                      \
 })
 
-#define node_create(T, val) ({                      \
-    auto _val_          = to_ptr(val);              \
-    Node(T)* _node_     = malloc(sizeof(Node(T)));  \
-    _node_->node_val    = *_val_;                   \
-    _node_->zored       = 0;                        \
-    _node_;                                         \
+#define node_create(linkedlist, node_data) ({                                                        \
+    __typeof__(to_ptr(linkedlist)) _linkedlist_ = to_ptr(linkedlist);                                \
+    __typeof__(to_ptr(node_data)) _node_val_    = to_ptr(node_data);                                 \
+    __typeof__(_linkedlist_->begin_node) _node_ = malloc(sizeof(*(_linkedlist_->begin_node)));       \
+    if(_node_){                                                                                      \
+        _node_->node_val    = *_node_val_;                                                           \
+        _node_->zored       = 0;                                                                     \
+    }                                                                                                \
+    _node_;                                                                                          \
 })
 
 // =================================================================
@@ -93,55 +96,55 @@
 // =================================================================
 
 // _Append_Begin_
-#define linkedlist_append_begin(linked_list, T, val) do {                           \
-    auto _linked_list_ = to_ptr(linked_list);                                       \
-    auto _node_ = node_create(T, val);                                              \
-    (                                                                               \
-        _linked_list_->begin_node == nullptr                                        \
-    )                                                                               \
-    ?                                                                               \
-        (                                                                           \
-            _linked_list_ -> end_node   = _node_,                                   \
-            _linked_list_ -> iter.curr  = _node_,                                   \
-            _linked_list_ -> riter.curr = _node_,                                   \
-            _linked_list_ -> begin_node = _node_                                    \
-        )                                                                           \
-    :                                                                               \
-        (                                                                           \
-            _node_->zored                     = (p64)_linked_list_->begin_node,     \
-            _linked_list_->begin_node->zored ^= (p64)_node_,                        \
-            _linked_list_->begin_node         = _node_,                             \
-            _linked_list_->iter.curr          = _node_                              \
-        )                                                                           \
-    ;                                                                               \
-    _linked_list_->size++;                                                          \
+#define linkedlist_append_begin(linkedlist, node_data) do {                             \
+    __typeof__(to_ptr(linkedlist)) _linked_list_ = to_ptr(linkedlist);                  \
+    __typeof__(_linked_list_->begin_node) _node_ = node_create(linkedlist, node_data);  \
+    (                                                                                   \
+        _linked_list_->begin_node == nullptr                                            \
+    )                                                                                   \
+    ?                                                                                   \
+        (                                                                               \
+            _linked_list_ -> end_node   = _node_,                                       \
+            _linked_list_ -> iter.curr  = _node_,                                       \
+            _linked_list_ -> riter.curr = _node_,                                       \
+            _linked_list_ -> begin_node = _node_                                        \
+        )                                                                               \
+    :                                                                                   \
+        (                                                                               \
+            _node_->zored                     = (p64)_linked_list_->begin_node,         \
+            _linked_list_->begin_node->zored ^= (p64)_node_,                            \
+            _linked_list_->begin_node         = _node_,                                 \
+            _linked_list_->iter.curr          = _node_                                  \
+        )                                                                               \
+    ;                                                                                   \
+    _linked_list_->size++;                                                              \
 } while(0)
     
 // _Append_End_
-#define linkedlist_append_end(linked_list, T, val) do {                             \
-    auto _linked_list_ = to_ptr(linked_list);                                       \
-    auto _node_ = node_create(T, val);                                              \
-    (                                                                               \
-        (_linked_list_->end_node   == nullptr)                                      \
-                        &&                                                          \
-        (_linked_list_->begin_node == nullptr)                                      \
-    )                                                                               \
-    ?                                                                               \
-        (                                                                           \
-            _linked_list_ -> end_node   = _node_,                                   \
-            _linked_list_ -> iter.curr  = _node_,                                   \
-            _linked_list_ -> riter.curr = _node_,                                   \
-            _linked_list_ -> begin_node = _linked_list_ -> end_node                 \
-        )                                                                           \
-    :                                                                               \
-        (                                                                           \
-            _node_        -> zored                = (p64)_linked_list_->end_node,   \
-            _linked_list_ -> end_node -> zored   ^= (p64)_node_,                    \
-            _linked_list_ -> end_node             = _node_,                         \
-            _linked_list_ -> riter.curr           = _node_                          \
-        )                                                                           \
-    ;                                                                               \
-    _linked_list_->size++;                                                          \
+#define linkedlist_append_end(linkedlist, node_data) do {                               \
+    __typeof__(to_ptr(linkedlist)) _linked_list_ = to_ptr(linkedlist);                  \
+    __typeof__(_linked_list_->begin_node) _node_ = node_create(linkedlist, node_data);  \
+    (                                                                                   \
+        (_linked_list_->end_node   == nullptr)                                          \
+                        &&                                                              \
+        (_linked_list_->begin_node == nullptr)                                          \
+    )                                                                                   \
+    ?                                                                                   \
+        (                                                                               \
+            _linked_list_ -> end_node   = _node_,                                       \
+            _linked_list_ -> iter.curr  = _node_,                                       \
+            _linked_list_ -> riter.curr = _node_,                                       \
+            _linked_list_ -> begin_node = _linked_list_ -> end_node                     \
+        )                                                                               \
+    :                                                                                   \
+        (                                                                               \
+            _node_        -> zored                = (p64)_linked_list_->end_node,       \
+            _linked_list_ -> end_node -> zored   ^= (p64)_node_,                        \
+            _linked_list_ -> end_node             = _node_,                             \
+            _linked_list_ -> riter.curr           = _node_                              \
+        )                                                                               \
+    ;                                                                                   \
+    _linked_list_->size++;                                                              \
 } while(0)
 
 // =================================================================
@@ -185,31 +188,3 @@
     for (__typeof__(linkedlist_riter(linkedlist)) _it2_ = linkedlist_riter(linkedlist); Iter(_it2_); Iter_Next(_it2_))  \
         for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it2_); var != nullptr; var = nullptr)
 
-/**
- * Macro Loops
- * printf("For Loop:"endl);
- * linkedlist_each(ss, it) {
- *     print_node(it.curr);
- * } endline;
- * 
- * printf("While Loop:"endl);
- * linkedlist_foreach(ss, var) {
- *     print_node(var);
- * } endline;
- *
- */
-
-/** 
- *  Normal loops
- *  printf("For Loop:"endl);
- *  for(__typeof__(linkedlist_iter(ss)) it = ss.iter ; Iter(it); Iter_Next(it)) {
- *      print_node(it.curr);
- *  } endline;
- *   
- *  printf("While Loop:"endl);
- *  Iterator(st) it2 = ss.iter;
- *  while(Iter(it2)) {
- *      print_node(Iter(it2));
- *      Iter_Next(it2);
- *  } endline;
- */

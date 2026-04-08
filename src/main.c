@@ -74,7 +74,7 @@ i32 main() {
             .one = i,
             .two = i+5,
         };
-        linkedlist_append_end(ss, st, tt);
+        linkedlist_append_end(ss, tt);
     }
     // for(i32 i = 1; i<5; i++){
         // st tt = {

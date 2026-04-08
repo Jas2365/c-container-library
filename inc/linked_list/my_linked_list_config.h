@@ -30,3 +30,39 @@
 //  printf("b val:  %d" endl, *((i32*)(xored ^ a)));
 
 
+
+//  list of variable names to avoid such as 
+//  1. _linked_list_
+//  2. _it_
+//  3. _it2_
+//  4. _node_
+//  5. _once_
+
+/**
+ * Macro Loops
+ * printf("For Loop:"endl);
+ * linkedlist_each(ss, it) {
+ *     print_node(it.curr);
+ * } endline;
+ * 
+ * printf("While Loop:"endl);
+ * linkedlist_foreach(ss, var) {
+ *     print_node(var);
+ * } endline;
+ *
+ */
+
+/** 
+ *  Normal loops
+ *  printf("For Loop:"endl);
+ *  for(__typeof__(linkedlist_iter(ss)) it = ss.iter ; Iter(it); Iter_Next(it)) {
+ *      print_node(it.curr);
+ *  } endline;
+ *   
+ *  printf("While Loop:"endl);
+ *  Iterator(st) it2 = ss.iter;
+ *  while(Iter(it2)) {
+ *      print_node(Iter(it2));
+ *      Iter_Next(it2);
+ *  } endline;
+ */
