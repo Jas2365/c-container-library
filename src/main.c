@@ -14,10 +14,11 @@
 #include <my_ints.h>
 #include <my_defs.h>
 #include <stdlib.h>
+#include <string.h>  
 
-#include <strings/my_string.h>
-#include <strings/my_string_view.h>
-#include <strings/my_string_arena.h>
+// #include <strings/my_string.h>
+// #include <strings/my_string_view.h>
+// #include <strings/my_string_arena.h>
 #include <lists/my_list.h>
 #include <arrays/my_array.h>
 #include <linked_list/my_linked_list.h>
@@ -42,11 +43,67 @@ typedef struct st {
 
 DEFINE_NODE(st);
 DEFINE_LINKED_LIST(st);
+DEFINE_ITERATOR(st);
+
+null print_node(Node(st)* n) {
+    printf("Node: v0: %-2d, v1: %-2d, xored: %p"endl, 
+            n->node_val.one,    
+            n->node_val.two,    
+            n->zored    
+    );
+}
 
 i32 main() {
     
-
     LINKED_LIST(st) ss;
+
+    // init
+    ss.begin_node = nullptr;
+    ss.end_node = nullptr;
+    ss.size = 0;
+
+    for(i32 i = 0; i<13; i++){
+        st tt = {
+            .one = i,
+            .two = i+13,
+        };
+        linkedlist_append_end(ss, st, tt);
+        printf("size : %d"endl, ss.size);
+    }
+
+    Iterator(st) it;
+    
+    it = iter_init(st, ss.end_node);
+    
+    while(it.curr) {
+        print_node(it.curr);    
+        Iter_Next(it);
+    }
+    
+    it = iter_init(st, ss.begin_node);
+    
+    while(it.curr) {
+        __typeof__(it.curr) nn = it.curr;
+        Iter_Next(it);
+        memset(nn, 0xAA, sizeof(*nn));
+        free(nn);
+    }
+
+    printf("val : %p" endl, ss.begin_node->zored);
+    printf("val : %p" endl, ss.end_node->zored);
+    printf("val : %d" endl, ss.end_node->node_val.one);
+    
+    ss.begin_node = nullptr;
+    ss.end_node = nullptr;
+    ss.size = 0;
+    
+    // it = iter_init(st, ss.end_node);
+    
+    // while(it.curr) {
+    //     print_node(it.curr);
+    //     Iter_Next(it);
+    // }
+    // destroy
 
     
 

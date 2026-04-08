@@ -55,3 +55,5 @@ typedef i32  b32;
 
 typedef float  f32;
 typedef double f64;
+
+typedef u64 p64;
