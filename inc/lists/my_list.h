@@ -193,9 +193,12 @@ DEFINE_LIST(f64);
     for( s64 index = 0; index < to_ptr(list)->size; index += step)
 
 // _Value_Loop_: list_foreach(list, int, x) { printf("%d" endl, x); }
-#define list_foreach(list, T, var)                                              \
+#define list_foreach(list, var)                                              \
     for (s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(list)->size; _i_++, _once_ = 1)  \
-        for( T var = to_ptr(list)->buffer[_i_]; _once_; _once_ = 0)
+        for( __typeof__(*list_buffer(list)) var = to_ptr(list)->buffer[_i_]; _once_; _once_ = 0)
+       
+        
 
+        
 
 

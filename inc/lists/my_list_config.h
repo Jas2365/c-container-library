@@ -63,7 +63,7 @@
 
 // list_each(list, index)
 // list_each_step(list, index, step)
-// list_foreach(list, T, var)
+// list_foreach(list, var)
 
 // use list_reserve if you want to double the capacity at a 
 // custom rate such as 
