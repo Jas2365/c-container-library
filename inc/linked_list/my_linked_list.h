@@ -160,8 +160,8 @@
 // it++
 // for(Iterator(st) it = ss.iter ; it.curr; Iter_Next(it)) {}
 #define Iter_Next(it) ({                                                    \
-   auto _it_   = to_ptr(it);                                                \
-   auto _next_ =                                                            \
+   __typeof__(to_ptr(it))  _it_   = to_ptr(it);                                                \
+   __typeof__(_it_->curr)  _next_ =                                                            \
     (__typeof__(_it_->curr)) ((p64)(_it_->curr->zored) ^ (_it_->prev));     \
     _it_->prev  = (p64)_it_->curr;                                          \
     _it_->curr  = _next_;                                                   \
@@ -169,14 +169,14 @@
 
 // it.curr
 // checks if curr exist or not nullptr or zero
-#define Iter(it) ({ auto _it_ = to_ptr(it); _it_->curr; })
+#define Iter(it) ({  __typeof__(to_ptr(it)) _it_ = to_ptr(it); _it_->curr; })
 
-#define linkedlist_each(iter, _it_) \
-    for(__typeof__(linkedlist_iter(ss)) _it_ = (iter); Iter(_it_); Iter_Next(_it_))
+#define linkedlist_each(linkedlist, _it_)                                                                          \
+    for (__typeof__(linkedlist_iter(linkedlist)) _it_ = linkedlist_iter(linkedlist); Iter(_it_); Iter_Next(_it_))
 
-#define linkedlist_foreach(iter, T, var)                                              \
-    for (s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(list)->size; _i_++, _once_ = 1)  \
-        for( T var = to_ptr(list)->buffer[_i_]; _once_; _once_ = 0)
+#define linkedlist_foreach(linkedlist, var)                                                                         \
+    for (__typeof__(linkedlist_iter(linkedlist)) _it_ = linkedlist_iter(linkedlist); Iter(_it_); Iter_Next(_it_))    \
+        for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it_); var != nullptr; var = nullptr)
 
 /**
  * Macro Loops
