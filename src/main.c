@@ -55,7 +55,7 @@ null print_node(Node(st)* n) {
 
 i32 main() {
     
-    LINKED_LIST(st) ss;
+    LINKED_LIST(st) ss = linkedlist_init;
 
     // init
     ss.begin_node = nullptr;
@@ -71,20 +71,18 @@ i32 main() {
         printf("size : %d"endl, ss.size);
     }
 
-    Iterator(st) it;
-    
-    it = iter_init(st, ss.end_node);
-    
-    while(it.curr) {
-        print_node(it.curr);    
-        Iter_Next(it);
+    for(Iterator(st) it = iter_init(st, ss.end_node) ; it.curr; Iter_Next(it)) {
+        print_node(it.curr);
     }
+
     
-    it = iter_init(st, ss.begin_node);
+
+    Iterator(st) it2;
+    it2 = iter_init(st, ss.begin_node);
     
-    while(it.curr) {
-        __typeof__(it.curr) nn = it.curr;
-        Iter_Next(it);
+    while(it2.curr) {
+        __typeof__(it2.curr) nn = it2.curr;
+        Iter_Next(it2);
         memset(nn, 0xAA, sizeof(*nn));
         free(nn);
     }

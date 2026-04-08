@@ -13,6 +13,10 @@
 #pragma once
 #include <ptr/ptr.h>
 
+// =================================================================
+//                          Type Defination
+// =================================================================
+
 #define DEFINE_NODE(T)          \
     typedef struct T##Node {    \
         T node_val;             \
@@ -41,6 +45,13 @@
 
 #define Iterator(T) T##Iterator
 
+// =================================================================
+//                          Construction
+// =================================================================
+
+// Stack
+#define linkedlist_init { .begin_node = nullptr, .end_node = nullptr, .size = 0 }
+
 #define iter_init(T, node) ({   \
     Iterator(T) _it_ = {        \
     .curr = node,               \
@@ -48,9 +59,11 @@
     _it_;                       \
 })
 
-#define linkedlist_init { .begin_node = nullptr, .end_node = nullptr, .size = 0 }
-#define linkedlist_init { .begin_node = nullptr, .end_node = nullptr, .size = 0 }
-
+// Heap
+#define linkedlist_alloc(T) ({                                          \
+    LINKED_LIST(T) _linked_list_ = calloc(1, sizeof(LINKED_LIST(T)));   \
+    _linked_list_;                                                      \
+})
 
 #define node_create(T, val) ({                      \
     auto _val_          = to_ptr(val);              \
@@ -60,6 +73,12 @@
     _node_;                                         \
 })
 
+
+// =================================================================
+//                          Mutation
+// =================================================================
+
+// _Append_End_
 #define linkedlist_append_end(linked_list, T, val) do {                             \
     auto _linked_list_ = to_ptr(linked_list);                                       \
     auto _node_ = node_create(T, val);                                              \
@@ -83,17 +102,18 @@
     _linked_list_->size++;                                                          \
 } while(0)
 
-// #define linkedlist_free(linkedlist) do{ \
-//     auto _it_ = iter_init;
-// } while(0)
+// =================================================================
+//                          Iteration
+// =================================================================
 
-#define Iter_Next(it) do {                                              \
-    __typeof__(to_ptr(it)) _it_   = to_ptr(it);                         \
-    __typeof__(_it_->curr) _next_ =                                     \
+// it++
+#define Iter_Next(it) ({                                                \
+   auto _it_   = to_ptr(it);                                            \
+   auto _next_ =                                                        \
     (__typeof__(_it_->curr)) ((p64)(_it_->curr->zored) ^ (_it_->prev)); \
     _it_->prev  = (p64)_it_->curr;                                      \
     _it_->curr  = _next_;                                               \
-} while(0)
+})
 
 
 
