@@ -25,18 +25,6 @@
 
 #define Node(T) T##Node
 
-#define DEFINE_LINKED_LIST(T)       \
-    typedef struct T##LinkedList {  \
-        Node(T)* begin_node;        \
-        Node(T)* end_node;          \
-        union {                     \
-            s64 size;               \
-            s64 length;             \
-        };                          \
-    }T##LinkedList
-
-#define LINKED_LIST(T) T##LinkedList 
-
 #define DEFINE_ITERATOR(T)          \
     typedef struct T##Iterator {    \
         Node(T)*    curr;           \
@@ -45,19 +33,34 @@
 
 #define Iterator(T) T##Iterator
 
+#define DEFINE_LINKED_LIST(T)       \
+    DEFINE_NODE(T);                 \
+    DEFINE_ITERATOR(T);             \
+    typedef struct T##LinkedList {  \
+        Node(T)* begin_node;        \
+        Node(T)* end_node;          \
+        union {                     \
+            s64 size;               \
+            s64 length;             \
+        };                          \
+        Iterator(T) iter;           \
+        Iterator(T) riter;          \
+    }T##LinkedList
+
+#define LINKED_LIST(T) T##LinkedList 
+
 // =================================================================
 //                          Construction
 // =================================================================
 
 // Stack
-#define linkedlist_init { .begin_node = nullptr, .end_node = nullptr, .size = 0 }
-
-#define iter_init(T, node) ({   \
-    Iterator(T) _it_ = {        \
-    .curr = node,               \
-    .prev = 0};                 \
-    _it_;                       \
-})
+#define linkedlist_init(T) {                                \
+    .begin_node = (Node(T)*)nullptr,                        \
+    .end_node   = (Node(T)*)nullptr,                        \
+    .size       = 0,                                        \
+    .iter       = {.curr = (Node(T)*)nullptr, .prev = 0},   \
+    .riter      = {.curr = (Node(T)*)nullptr, .prev = 0},   \
+}
 
 // Heap
 #define linkedlist_alloc(T) ({                                          \
@@ -78,6 +81,31 @@
 //                          Mutation
 // =================================================================
 
+// _Append_Begin_
+#define linkedlist_append_begin(linked_list, T, val) do {                           \
+    auto _linked_list_ = to_ptr(linked_list);                                       \
+    auto _node_ = node_create(T, val);                                              \
+    (                                                                               \
+        _linked_list_->begin_node == nullptr                                        \
+    )                                                                               \
+    ?                                                                               \
+        (                                                                           \
+            _linked_list_ -> end_node   = _node_,                                   \
+            _linked_list_ -> iter.curr  = _node_,                                   \
+            _linked_list_ -> riter.curr = _node_,                                   \
+            _linked_list_ -> begin_node = _node_                                    \
+        )                                                                           \
+    :                                                                               \
+        (                                                                           \
+            _node_->zored                     = (p64)_linked_list_->begin_node,     \
+            _linked_list_->begin_node->zored ^= (p64)_node_,                        \
+            _linked_list_->begin_node         = _node_,                             \
+            _linked_list_->iter.curr          = _node_                              \
+        )                                                                           \
+    ;                                                                               \
+    _linked_list_->size++;                                                          \
+} while(0)
+    
 // _Append_End_
 #define linkedlist_append_end(linked_list, T, val) do {                             \
     auto _linked_list_ = to_ptr(linked_list);                                       \
@@ -89,24 +117,37 @@
     )                                                                               \
     ?                                                                               \
         (                                                                           \
-            _linked_list_ -> end_node     = _node_,                                 \
-            _linked_list_ -> begin_node   = _linked_list_ -> end_node               \
+            _linked_list_ -> end_node   = _node_,                                   \
+            _linked_list_ -> iter.curr  = _node_,                                   \
+            _linked_list_ -> riter.curr = _node_,                                   \
+            _linked_list_ -> begin_node = _linked_list_ -> end_node                 \
         )                                                                           \
     :                                                                               \
         (                                                                           \
             _node_        -> zored                = (p64)_linked_list_->end_node,   \
             _linked_list_ -> end_node -> zored   ^= (p64)_node_,                    \
-            _linked_list_ -> end_node             = _node_                          \
+            _linked_list_ -> end_node             = _node_,                         \
+            _linked_list_ -> riter.curr           = _node_                          \
         )                                                                           \
     ;                                                                               \
     _linked_list_->size++;                                                          \
 } while(0)
 
 // =================================================================
+//                          Destruction
+// =================================================================
+
+// _Stack_Linked_List_
+#define linkedlist_free(linkedlist)
+
+// _Heap_Linked_List_
+
+// =================================================================
 //                          Iteration
 // =================================================================
 
 // it++
+// for(Iterator(st) it = ss.iter ; it.curr; Iter_Next(it)) {}
 #define Iter_Next(it) ({                                                \
    auto _it_   = to_ptr(it);                                            \
    auto _next_ =                                                        \
