@@ -171,21 +171,25 @@
 // checks if curr exist or not nullptr or zero
 #define Iter(it) ({  __typeof__(to_ptr(it)) _it_ = to_ptr(it); _it_->curr; })
 
-#define linkedlist_each(linkedlist, _it_)                                                                          \
-    for (__typeof__(linkedlist_iter(linkedlist)) _it_ = linkedlist_iter(linkedlist); Iter(_it_); Iter_Next(_it_))
+#define linkedlist_each(linkedlist, _it2_)                                                                          \
+    for (__typeof__(linkedlist_iter(linkedlist)) _it2_ = linkedlist_iter(linkedlist); Iter(_it2_); Iter_Next(_it2_))
 
 #define linkedlist_foreach(linkedlist, var)                                                                         \
-    for (__typeof__(linkedlist_iter(linkedlist)) _it_ = linkedlist_iter(linkedlist); Iter(_it_); Iter_Next(_it_))    \
-        for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it_); var != nullptr; var = nullptr)
+    for (__typeof__(linkedlist_iter(linkedlist)) _it2_ = linkedlist_iter(linkedlist); Iter(_it2_); Iter_Next(_it2_))    \
+        for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it2_); var != nullptr; var = nullptr)
 
 /**
  * Macro Loops
  * printf("For Loop:"endl);
- * linkedlist_each(linkedlist_iter(ss), it) {
+ * linkedlist_each(ss, it) {
  *     print_node(it.curr);
  * } endline;
  * 
- * 
+ * printf("While Loop:"endl);
+ * linkedlist_foreach(ss, var) {
+ *     print_node(var);
+ * } endline;
+ *
  */
 
 /** 
