@@ -160,8 +160,8 @@
 // it++
 // for(Iterator(st) it = ss.iter ; it.curr; Iter_Next(it)) {}
 #define Iter_Next(it) ({                                                    \
-   __typeof__(to_ptr(it))  _it_   = to_ptr(it);                                                \
-   __typeof__(_it_->curr)  _next_ =                                                            \
+   __typeof__(to_ptr(it))  _it_   = to_ptr(it);                             \
+   __typeof__(_it_->curr)  _next_ =                                         \
     (__typeof__(_it_->curr)) ((p64)(_it_->curr->zored) ^ (_it_->prev));     \
     _it_->prev  = (p64)_it_->curr;                                          \
     _it_->curr  = _next_;                                                   \
@@ -171,11 +171,18 @@
 // checks if curr exist or not nullptr or zero
 #define Iter(it) ({  __typeof__(to_ptr(it)) _it_ = to_ptr(it); _it_->curr; })
 
-#define linkedlist_each(linkedlist, _it2_)                                                                          \
+#define linkedlist_each(linkedlist, _it2_)                                                                              \
     for (__typeof__(linkedlist_iter(linkedlist)) _it2_ = linkedlist_iter(linkedlist); Iter(_it2_); Iter_Next(_it2_))
 
-#define linkedlist_foreach(linkedlist, var)                                                                         \
+#define linkedlist_foreach(linkedlist, var)                                                                             \
     for (__typeof__(linkedlist_iter(linkedlist)) _it2_ = linkedlist_iter(linkedlist); Iter(_it2_); Iter_Next(_it2_))    \
+        for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it2_); var != nullptr; var = nullptr)
+
+#define linkedlist_rev_each(linkedlist, _it2_)                                                                          \
+    for (__typeof__(linkedlist_riter(linkedlist)) _it2_ = linkedlist_riter(linkedlist); Iter(_it2_); Iter_Next(_it2_))
+
+#define linkedlist_rev_foreach(linkedlist, var)                                                                         \
+    for (__typeof__(linkedlist_riter(linkedlist)) _it2_ = linkedlist_riter(linkedlist); Iter(_it2_); Iter_Next(_it2_))  \
         for( __typeof__(linkedlist_bn(linkedlist)) var = Iter(_it2_); var != nullptr; var = nullptr)
 
 /**
