@@ -41,9 +41,8 @@ typedef struct st {
     i32 two;
 } st;
 
-DEFINE_NODE(st);
 DEFINE_LINKED_LIST(st);
-DEFINE_ITERATOR(st);
+
 
 null print_node(Node(st)* n) {
     printf("Node: v0: %-2d, v1: %-2d, xored: %p"endl, 
@@ -55,45 +54,49 @@ null print_node(Node(st)* n) {
 
 i32 main() {
     
-    LINKED_LIST(st) ss = linkedlist_init;
+    LINKED_LIST(st) ss = linkedlist_init(st);
 
-    // init
-    ss.begin_node = nullptr;
-    ss.end_node = nullptr;
-    ss.size = 0;
-
-    for(i32 i = 0; i<13; i++){
+    for(i32 i = 0; i<5; i++){
         st tt = {
             .one = i,
-            .two = i+13,
+            .two = i+5,
         };
         linkedlist_append_end(ss, st, tt);
-        printf("size : %d"endl, ss.size);
     }
+    for(i32 i = 5; i<5+5; i++){
+        st tt = {
+            .one = i,
+            .two = i+5,
+        };
+        linkedlist_append_begin(ss, st, tt);
+    }
+    printf("size : %d"endl, ss.size);
 
-    for(Iterator(st) it = iter_init(st, ss.end_node) ; it.curr; Iter_Next(it)) {
+    
+
+    for(Iterator(st) it = ss.riter ; it.curr; Iter_Next(it)) {
         print_node(it.curr);
     }
 
     
 
-    Iterator(st) it2;
-    it2 = iter_init(st, ss.begin_node);
+    // Iterator(st) it2;
+    // it2 = iter_init(st, ss.begin_node);
     
-    while(it2.curr) {
-        __typeof__(it2.curr) nn = it2.curr;
-        Iter_Next(it2);
-        memset(nn, 0xAA, sizeof(*nn));
-        free(nn);
-    }
+    // while(it2.curr) {
+    //     __typeof__(it2.curr) nn = it2.curr;
+    //     Iter_Next(it2);
+    //     memset(nn, 0xAA, sizeof(*nn));
+    //     free(nn);
+    // }
 
-    printf("val : %p" endl, ss.begin_node->zored);
-    printf("val : %p" endl, ss.end_node->zored);
-    printf("val : %d" endl, ss.end_node->node_val.one);
+    // printf("val : %p" endl, ss.begin_node->zored);
+    // printf("val : %p" endl, ss.end_node->zored);
+    // printf("val : %d" endl, ss.end_node->node_val.one);
     
-    ss.begin_node = nullptr;
-    ss.end_node = nullptr;
-    ss.size = 0;
+    // ss.begin_node = nullptr;
+    // ss.end_node = nullptr;
+    // ss.size = 0;
     
     // it = iter_init(st, ss.end_node);
     
