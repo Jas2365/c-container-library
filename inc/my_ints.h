@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include <stdint.h>
+
 /**
  * for windows 64 bit
  * 
@@ -25,35 +27,58 @@
  */
 typedef void null;
 
-typedef char       i8;
-typedef short     i16;
-typedef int       i32;
-typedef long long i64;
+typedef int8_t  i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
 
-typedef const char       ci8;
-typedef const short     ci16;
-typedef const int       ci32;
-typedef const long long ci64;
+typedef const int8_t  ci8;
+typedef const int16_t ci16;
+typedef const int32_t ci32;
+typedef const int64_t ci64;
 
-typedef unsigned char       u8;
-typedef unsigned short     u16;
-typedef unsigned int       u32;
-typedef unsigned long long u64;
+typedef uint8_t  u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
 
-typedef const unsigned char       cu8;
-typedef const unsigned short     cu16;
-typedef const unsigned int       cu32;
-typedef const unsigned long long cu64;
+typedef const uint8_t  cu8;
+typedef const uint16_t cu16;
+typedef const uint32_t cu32;
+typedef const uint64_t cu64;
 
-#if defined(_WIN64)
-    typedef u64  s64; // size_t
-#else
-    typedef u32  s64; // size_t
-#endif
+typedef int8_t  *ip8;
+typedef int16_t *ip16;
+typedef int32_t *ip32;
+typedef int64_t *ip64;
+
+typedef const int8_t  *cip8;
+typedef const int16_t *cip16;
+typedef const int32_t *cip32;
+typedef const int64_t *cip64;
+
+typedef uint8_t  *up8;
+typedef uint16_t *up16;
+typedef uint32_t *up32;
+typedef uint64_t *up64;
+
+typedef const uint8_t  *cup8;
+typedef const uint16_t *cup16;
+typedef const uint32_t *cup32;
+typedef const uint64_t *cup64;
+
+typedef size_t  s64;    // size_t
+typedef size_t  *sp64;  // size_t
+
 typedef bool  b8;
 typedef i32  b32;
 
+typedef bool  *bp8;
+typedef i32  *bp32;
+
 typedef float  f32;
 typedef double f64;
+typedef float  *fp32;
+typedef double *fp64;
 
-typedef u64 p64;
+typedef uintptr_t p64;

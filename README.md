@@ -7,6 +7,8 @@ A lightweight, header-based C library providing essential container types and ut
 - **Dynamic Strings**
 - **Generic Lists**
 - **Generic Arrays**
+- **Generic Stack**
+- **Generic Linked Lists**
 - **Pointer**
 - **Arena Allocator**
 - **Type Aliases**
@@ -40,7 +42,7 @@ The arena allocator mode can be configured at build time:
 make build Arena_Mode=_Large_Arena_
 ```
 
-Default mode: `_Small_Arena_`
+Default mode: `_Small_Arena_` 64Kib
 
 ## Project Structure
 

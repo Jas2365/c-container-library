@@ -1,4 +1,4 @@
-cxx = gcc
+cxx = I:\vs_code_files\packages\MinGW\bin\gcc
 
 Arena_Mode ?= _Small_Arena_
 cflags = -D$(Arena_Mode)

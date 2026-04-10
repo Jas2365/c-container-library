@@ -51,21 +51,25 @@ null print_node(Node(st)* n) {
     );
 }
 
+DEFINE_LIST(i32);
+
 i32 main() {
     
-    // List(i32) lm = list_init;
+    List(i32) lm = list_init;
 
-    // for(i32 i = 0; i< 5; i++) {
-    //     list_push(lm, i);
-    // }
+    List(i32) lk = list_init;
 
-    // list_each(lm, i) {
-    //     printf("%d ", list_get(lm, i));
-    // } endline;
+    for(i32 i = 0; i< 5; i++) {
+        list_push(lm, i);
+    }
 
-    // list_foreach(lm, v) {
-    //     printf("%d ", v);
-    // } endline;
+    list_each(lm, i) {
+        printf("%d ", list_get(lm, i));
+    } endline;
+
+    list_foreach(lm, v) {
+        printf("%d ", v);
+    } endline;
 
     LINKED_LIST(st) ss = linkedlist_init(st);
 
@@ -76,13 +80,13 @@ i32 main() {
         };
         linkedlist_append_end(ss, tt);
     }
-    // for(i32 i = 1; i<5; i++){
-        // st tt = {
-        //     .one = i,
-        //     .two = i+5,
-        // };
-        // linkedlist_append_begin(ss, st, tt);
-    // }
+    for(i32 i = 1; i<5; i++){
+        st tt = {
+            .one = i,
+            .two = i+5,
+        };
+        linkedlist_append_begin(ss, tt);
+    }
     printf("size : %d"endl, ss.size);
 
     printf("For Loop:"endl);

@@ -76,25 +76,25 @@
 #define array_last(array)         (array_buffer(array)[array_size(array) -1])
 
 // checked for out of bounds
-#define array_get_safe(array, index)  ({    \
-    auto _array_ = to_ptr(array);           \
-    s64 _i_ = (i);                          \
-    _i_ < _array_->size                     \
-        ? & _array_->buffer[_i_]            \
-        : nullptr ;                         \
+#define array_get_safe(array, index)  ({                \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);  \
+    s64 _i_ = (i);                                      \
+    _i_ < _array_->size                                 \
+        ? & _array_->buffer[_i_]                        \
+        : nullptr ;                                     \
 })
 
-#define array_first_safe(array) ({          \
-    auto _array_ to_ptr(array);             \
-    _array_->size ? _array_->buffer[0]      \
-                  :  nullptr;               \
+#define array_first_safe(array) ({                      \
+    __typeof__(to_ptr(array)) _array_ to_ptr(array);    \
+    _array_->size ? _array_->buffer[0]                  \
+                  :  nullptr;                           \
 })
 
-#define array_last_safe(array) ({           \
-    auto _array_ to_ptr(array);             \
-    _array_->size                           \
-    ? _array_->buffer[_array_->size -1]     \
-    :  nullptr;                             \
+#define array_last_safe(array) ({                       \
+    __typeof__(to_ptr(array)) _array_ to_ptr(array);    \
+    _array_->size                                       \
+    ? _array_->buffer[_array_->size -1]                 \
+    :  nullptr;                                         \
 })
 
 // =================================================================
@@ -102,19 +102,19 @@
 // =================================================================
 
 // _Push_
-#define array_push(array, item) ({                  \
-    auto _array_ = to_ptr(array);                   \
-    i32 _ok_ = _array_->size < _array_->capacity;   \
-    if(_ok_) {                                      \
-        _array_->buffer[_array_->size] = (item);    \
-        _array_->size++;                            \
-    }                                               \
-    _ok_;                                           \
+#define array_push(array, item) ({                      \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);  \
+    i32 _ok_ = _array_->size < _array_->capacity;       \
+    if(_ok_) {                                          \
+        _array_->buffer[_array_->size] = (item);        \
+        _array_->size++;                                \
+    }                                                   \
+    _ok_;                                               \
 })
 
 // _Push_And_Abort_ on full
 #define array_push_assert(array, item) do {                 \
-    auto _array_ = to_ptr(array);                           \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);      \
     if(_array_->size >= _array_->capacity) {                \
         fprintf(                                            \
             stderr,                                         \
@@ -130,23 +130,23 @@
 
 // _Pop_
 #define array_pop(array) ({\
-    auto _array = to_ptr(array);        \
-    _array_->buffer[--_array_->size];   \
+    __typeof__(to_ptr(array)) _array = to_ptr(array);   \
+    _array_->buffer[--_array_->size];                   \
 })
 
 // _Pop_And_Abort_ on null
-#define array_pop_assert(array) ({                  \
-    auto _array_ = to_ptr(array);                   \
-    if(_array_->size <= 0) {                        \
-        fprintf(                                    \
-            stderr,                                 \
-            "[ARRAY]::[UNDERFLOW] AT: %s:%d"endl,   \
-            __FILE__,                               \
-            __LINE__                                \
-        );                                          \
-        exit_failure;                               \
-    }                                               \
-    _array_->buffer[--_array_->size];               \
+#define array_pop_assert(array) ({                      \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);  \
+    if(_array_->size <= 0) {                            \
+        fprintf(                                        \
+            stderr,                                     \
+            "[ARRAY]::[UNDERFLOW] AT: %s:%d"endl,       \
+            __FILE__,                                   \
+            __LINE__                                    \
+        );                                              \
+        exit_failure;                                   \
+    }                                                   \
+    _array_->buffer[--_array_->size];                   \
 })
 
 // unchecked 
@@ -157,7 +157,7 @@
 
 // _Insert_
 #define array_insert(array, index, item) ({                                 \
-    auto _array_ = to_ptr(array);                                           \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);                      \
     s64 _i_ = (index);                                                      \
     i32 _ok_ = _array_->size < _array_->capacity && _i_ <= _array_->size;   \
     if(_ok_) {                                                              \
@@ -172,7 +172,7 @@
 
 // _Remove_
 #define array_remove(array, index) ({                                       \
-    auto _array_ = to_ptr(array);                                           \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);                      \
     s64 _i_ = (index);                                                      \
     i32 _ok_ = _array_->size < _array_->capacity && _i_ <= _array_->size;   \
     if(_ok_) {                                                              \
@@ -187,7 +187,7 @@
 
 // _Swap_Remove_ O(1)
 #define array_swap_remove(array, index) ({                          \
-    auto _array_ = to_ptr(array);                                   \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);              \
     s64 _i_ = (index);                                              \
     i32 _ok_ = _i_ < _array_->size;                                 \
     if(_ok_) {                                                      \
@@ -198,12 +198,12 @@
 
 // _Clear_
 #define array_clear(array) do {     \
-    to_ptr(array)->size = 0;        \
+    array_size(array) = 0;          \
 } while(0)
 
 // _Zero_
 #define array_zero(array) do {                                                  \
-    auto _array_ = to_ptr(array);                                               \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);                          \
     memset(_array_->buffer, 0, sizeof(*_array_->buffer) * _array_->capacity);   \
     _array_->size = 0;                                                          \
 } while(0)
@@ -219,12 +219,12 @@
 } while(0)
 
 // _Heap_Array_
-#define array_destroy(array) do {   \
-    auto _array_ = to_ptr(array);   \
-    if(_array_) {                   \
-        free(_array_);              \
-        array = nullptr;            \
-    }                               \
+#define array_destroy(array) do {                       \
+    __typeof__(to_ptr(array)) _array_ = to_ptr(array);  \
+    if(_array_) {                                       \
+        free(_array_);                                  \
+        array = nullptr;                                \
+    }                                                   \
 } while(0)
 
 // =================================================================
@@ -242,6 +242,6 @@
 // _Value_Loop_
 #define array_foreach(array, T, var)                                            \
     for( s64 _i_ = 0, _once_ = 1; _i_ < to_ptr(array)->size; _i_++, _once_ =1)  \
-        for(T var = to_ptr(array)->buffer[_i_]; _once_; _once_ = 0 )
+        for(T var = array_get(array, _i_); _once_; _once_ = 0 )
 
 

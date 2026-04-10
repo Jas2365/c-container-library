@@ -35,6 +35,9 @@
 
 #define List(T) T##List 
 
+
+
+
 // =================================================================
 //                          Construction
 // =================================================================
@@ -83,9 +86,9 @@ DEFINE_LIST(f64);
 #define list_isempty(list)      (list_size(list) == 0)
 #define list_get(list, index)   (list_buffer(list)[index])
 #define list_first(list)        (list_buffer(list)[0])
-#define list_last(list)         (list_buffer(list)[list_size(size) -1])
+#define list_last(list)         (list_buffer(list)[list_size(list) - 1])
 
-#define list_assert(list)       (list_size(list) >= list_capacity(list))
+#define list_assert(list)       (list_size(list) <= list_capacity(list))
 
 // =================================================================
 //                          Growth Helper
@@ -93,7 +96,7 @@ DEFINE_LIST(f64);
 
 //_Grow_
 #define list_grow(list) do {                                                                    \
-    auto _list_ = to_ptr(list);                                                                 \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);                                             \
     _list_->capacity  = _list_->capacity == 0                                                   \
                         ? _initial_list_size_                                                   \
                         : _list_->capacity * _list_growth_size_;                                \
@@ -110,7 +113,7 @@ DEFINE_LIST(f64);
 
 // _Reserve_
 #define list_reserve(list, size) do {                                                           \
-    auto _list_ = to_ptr(list);                                                                 \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);                                             \
     if((size) > _list_->capacity) {                                                             \
         _list_->buffer = realloc(_list_->buffer, sizeof(*_list_->buffer) * (size));             \
         if(!_list_->buffer) {                                                                   \
@@ -122,23 +125,23 @@ DEFINE_LIST(f64);
 } while(0)
 
 // _Push_
-#define list_push(list, item) do {              \
-    auto _list_ = to_ptr(list);                 \
-    if(_list_->size == _list_->capacity) {      \
-        list_grow(list);                        \
-    }                                           \
-    _list_->buffer[_list_->size++] = (item);    \
+#define list_push(list, item) do {                      \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);     \
+    if(_list_->size == _list_->capacity) {              \
+        list_grow(list);                                \
+    }                                                   \
+    _list_->buffer[_list_->size++] = (item);            \
 } while(0)
 
 // _Pop_
-#define list_pop(list) ({               \
-    auto _list_ = to_ptr(list);         \
-    _list_->buffer[--_list_->size];     \
+#define list_pop(list) ({                               \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);     \
+    _list_->buffer[--_list_->size];                     \
 })
 
 // _Pop_And_Abort_ on null
 #define list_pop_assert(list) ({                    \
-    auto _list_ = to_ptr(list);                     \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list); \
     if(_list_->size <= 0) {                         \
         fprintf(                                    \
             stderr,                                 \
@@ -153,7 +156,7 @@ DEFINE_LIST(f64);
 
 // _Clear_
 #define list_clear(list) do {   \
-    to_ptr(list)->size = 0;     \
+    list_size(list) = 0;     \
 } while(0)
 
 // =================================================================
@@ -161,24 +164,24 @@ DEFINE_LIST(f64);
 // =================================================================
 
 // _Stack_List_
-#define list_free(list) do {                    \
-    auto _list_ = to_ptr(list);                 \
-    if(_list_->buffer) {                        \
-        free(_list_->buffer);                   \
-        list = _null_list_(_list_);             \
-       }                                        \
+#define list_free(list) do {                            \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);     \
+    if(_list_->buffer) {                                \
+        free(_list_->buffer);                           \
+        list = _null_list_(_list_);                     \
+       }                                                \
 } while(0)
 
 // _Heap_List_
-#define list_destroy(list) do {     \
-    auto _list_ = to_ptr(list);     \
-    if(_list_) {                    \
-        if(_list_->buffer) {        \
-            free(_list_->buffer);   \
-        }                           \
-        free(_list_);               \
-        list = nullptr;             \
-    }                               \
+#define list_destroy(list) do {                         \
+    __typeof__(to_ptr(list)) _list_ = to_ptr(list);     \
+    if(_list_) {                                        \
+        if(_list_->buffer) {                            \
+            free(_list_->buffer);                       \
+        }                                               \
+        free(_list_);                                   \
+        list = nullptr;                                 \
+    }                                                   \
 } while(0)
 
 // =================================================================

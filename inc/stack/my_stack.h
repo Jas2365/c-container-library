@@ -84,7 +84,7 @@ DEFINE_STACK(f64);
 
 //_Grow_
 #define stack_grow(stack) do {                                                                   \
-    auto _stack_ = to_ptr(stack);                                                                \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);                                           \
     _stack_->capacity  = _stack_->capacity == 0                                                  \
                         ? _initial_stack_size_                                                   \
                         : _stack_->capacity * _stack_growth_size_;                               \
@@ -100,33 +100,33 @@ DEFINE_STACK(f64);
 // =================================================================
 
 // _Push_
-#define stack_push(stack, item) do {                \
-    auto _stack_ = to_ptr(stack);                   \
-    if(_stack_->size == _stack_->capacity) {        \
-        stack_grow(stack);                          \
-    }                                               \
-    _stack_->buffer[_stack_->size++] = (item);      \
+#define stack_push(stack, item) do {                    \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);  \
+    if(_stack_->size == _stack_->capacity) {            \
+        stack_grow(stack);                              \
+    }                                                   \
+    _stack_->buffer[_stack_->size++] = (item);          \
 } while(0)
 
 // _Pop_
-#define stack_pop(stack) ({             \
-    auto _stack_ = to_ptr(stack);       \
-    _stack_->buffer[--_stack_->size];   \
+#define stack_pop(stack) ({                             \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);  \
+    _stack_->buffer[--_stack_->size];                   \
 })
 
 // _Pop_And_Abort_ on null
-#define stack_pop_assert(stack) ({                  \
-    auto _stack_ = to_ptr(stack);                   \
-    if(_stack_->size <= 0) {                        \
-        fprintf(                                    \
-            stderr,                                 \
-            "[STACK]::[UNDERFLOW] AT: %s:%d"endl,   \
-            __FILE__,                               \
-            __LINE__                                \
-        );                                          \
-        exit_failure;                               \
-    }                                               \
-    _stack_->buffer[--_stack_->size];               \
+#define stack_pop_assert(stack) ({                      \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);  \
+    if(_stack_->size <= 0) {                            \
+        fprintf(                                        \
+            stderr,                                     \
+            "[STACK]::[UNDERFLOW] AT: %s:%d"endl,       \
+            __FILE__,                                   \
+            __LINE__                                    \
+        );                                              \
+        exit_failure;                                   \
+    }                                                   \
+    _stack_->buffer[--_stack_->size];                   \
 })
 
 // _Clear_
@@ -139,23 +139,23 @@ DEFINE_STACK(f64);
 // =================================================================
 
 // _Stack_Stack_
-#define stack_free(stack) do {          \
-    auto _stack_ = to_ptr(stack);       \
-    if(_stack_->buffer) [               \
-        free(_stack_->buffer);          \
-        stack = _null_stack_(_stack_);  \
-    ]                                   \
+#define stack_free(stack) do {                          \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);  \
+    if(_stack_->buffer) [                               \
+        free(_stack_->buffer);                          \
+        stack = _null_stack_(_stack_);                  \
+    ]                                                   \
 } while(0)
 
 // _Heap_Stack_
-#define stack_destroy(stack) do {       \
-    auto _stack_ = to_ptr(stack);       \
-    if(_stack_) {                       \
-        if(_stack_->buffer) {           \
-            free(_stack_->buffer);      \
-        }                               \
-        free(_stack_);                  \
-        stack = nullptr;                \
-    }                                   \
+#define stack_destroy(stack) do {                       \
+    __typeof__(to_ptr(stack)) _stack_ = to_ptr(stack);  \
+    if(_stack_) {                                       \
+        if(_stack_->buffer) {                           \
+            free(_stack_->buffer);                      \
+        }                                               \
+        free(_stack_);                                  \
+        stack = nullptr;                                \
+    }                                                   \
 } while(0)
 
